@@ -1,0 +1,38 @@
+/* *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.navbar .nav-link{
+    font-weight: 500px;
+} */
+#hero{
+    background: linear-gradient(rgba(0, 0, 0, 0.507), rgba(0, 0, 0, 0.438)), url(hero.jpg);
+    background-position: center;
+    background-size: cover;
+}
+.section-padding{
+    padding: 100px 0;
+}
+.special-offers {
+    padding: 50px 0;
+    background-color: #f8f9fa;
+}
+.offer-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.offer-title {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+.offer-description {
+    color: #000;
+    margin-bottom: 20px;
+}
+.offer-expiry {
+    color: #153fb3;
+}

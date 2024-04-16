@@ -1,0 +1,281 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+header {
+    transition: background-color 0.3s ease-in-out;
+}
+
+header.scrolled {
+    background-color: #ffc107 !important; /* Yellow color */
+}
+
+.navbar-brand img {
+    max-height: 40px; /* Adjust the logo height as needed */
+}
+
+.navbar-nav.ml-auto .nav-link {
+    color: #333; /* Adjust link color */
+    margin-left: 20px; /* Adjust margin between links */
+}
+
+.navbar-nav.ml-auto .nav-link:hover {
+    color: #000; /* Adjust link hover color */
+}
+
+.navbar-nav.ml-auto .nav-link i {
+    margin-right: 5px; /* Adjust margin between icon and text */
+}
+.nav-link{
+    color: #fff;
+}
+.hero-section {
+    background-image: url('hero.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    color: #fff;
+    height: 100vh;
+}
+
+.hero-heading {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero-subheading {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.btn-primary {
+    background-color: #ff6347;
+    border-color: #ff6347;
+}
+
+.btn-primary:hover {
+    background-color: #ff4500;
+    border-color: #ff4500;
+}
+.feature-item {
+    text-align: center;
+    margin-bottom: 30px;
+}
+  
+.feature-item i {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+  
+.feature-item h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+  
+.feature-item p {
+    font-size: 16px;
+    color: #777;
+}
+  .menu-item {
+    margin-bottom: 20px;
+}
+.menu-item img {
+    max-width: 100%;
+    height: auto;
+}
+.menu-item h3 {
+    margin-top: 10px;
+}
+.menu-item p {
+    font-size: 14px;
+}
+.testimonial-container {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+.testimonial-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.testimonial-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+.testimonial-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.testimonial-company {
+    color: #666;
+    font-style: italic;
+}
+#how-it-works {
+    background-color: #f9f9f9;
+    padding: 50px 0;
+}
+  
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+  
+.step {
+    text-align: center;
+    margin-bottom: 30px;
+}
+  
+.step img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+  
+.step h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+  
+.step p {
+    font-size: 18px;
+}
+.special-offers {
+    padding: 50px 0;
+    background-color: #f8f9fa;
+}
+.offer-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.offer-title {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+.offer-description {
+    color: #666;
+    margin-bottom: 20px;
+}
+.offer-expiry {
+    color: #999;
+}
+#contact {
+    background-color: #f8f9fa;
+}
+  
+#contact h2.section-heading {
+    color: #343a40;
+}
+  
+#contact p {
+    color: #6c757d;
+}
+  
+#contactForm .form-control {
+    border-radius: 0;
+}
+  
+#contactForm .btn-primary {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+  
+#contactForm .btn-primary:hover,
+#contactForm .btn-primary:focus {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+}
+.footer-links {
+    text-align: center;
+}
+.footer-links a {
+    color: #333;
+    margin: 0 10px;
+}
+/* menu */
+.menu-item {
+    position: relative;
+}
+
+.product-details {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    z-index: 1000;
+}
+
+.menu-item:hover .product-details {
+    display: block;
+}
+.product {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.product:hover {
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    cursor: pointer;
+}
+.order-box {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.product-img {
+    max-width: 100px; /* Set maximum width for the image */
+    height: auto; /* Allow the height to adjust proportionally */
+    margin-right: 10px; /* Add margin to separate image from text */
+}
+
+.order-box {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-items {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .product-img {
+    max-width: 100px;
+    height: auto;
+  }
+
+  .product-detail {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .product-detail span {
+    margin-right: 10px;
+  }
+
+  .quantity, .total-price {
+    flex: 0 0 auto;
+  }
+  
