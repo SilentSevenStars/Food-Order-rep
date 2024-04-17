@@ -1,93 +1,10 @@
 <?php
     require 'component/connection.php';
     require 'component/show.php';
-    require 'component/update.php';
-    require 'component/add.php';
 
     session_start();
 
-    $showProduct = new Show($conn, 'product');
-    $showCategory = new Show($conn, 'category');
-    $showCart = new Show($conn, 'cart');
-    $showList = new Show($conn, 'list');
-    $addList = new Add($conn, 'list');
-    $addCart = new Add($conn, 'cart');
-
-    if(isset($_SESSION['cart']) && isset($_SESSION['customer_id'])){
-        $cart = $_SESSION['cart'];
-        $data = [];
-        foreach ($cart as $key => $value) {
-            $data[$key] = $value;
-        }
-        try {
-            $action = $addList->addQuery($data);
-        } catch (\Throwable $th) {
-            echo "Error: $e";
-        }
-        unset($_SESSION['cart']);
-    }
-
-    if(isset($_POST['add_to_cart'])){
-        if(!isset($_SESSION['customer_id'])){
-            $sub_price = $_POST['quantity'] * $_POST['price'];
-            $cart = array(
-                'product_id' => $_POST['product_id'],
-                'quantity' => $_POST['quantity'],
-                'sub_price' => $sub_price
-            );
-            $_SESSION['cart'] = $cart;
-        } else {
-            if(isset($_SESSION['cart_id'])){
-                $cart_id = $_SESSION['cart_id'];
-                $list = $showList->showRecords("cart_id = $cart_id AND product_id  = ". $_POST['product_id']);
-                if(count($list) > 0){
-                    $data =[];
-                    $quantity = $_POST['quantity'];
-                    $sub_price = $_POST['quantity'] * $_POST['price'];
-                    $query = "UPDATE list SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ". $_POST['product_id'];
-                    $result = $conn->query($query);
-                } else {
-                    $data = [];
-                    foreach ($_POST as $name => $value) {
-                        if($name!="add_to_cart" && $name!="price")
-                            $data[$name] = $value;
-                    }
-                    $data['sub_price'] = $_POST['quantity'] * $_POST['price'];
-                    $data['cart_id'] = $_SESSION['cart_id'];
-                    try {
-                        $action = $addList->addQuery($data);
-                    } catch (Exception $e) {
-                        echo "Error: $e";
-                    }
-                } 
-            } else {
-                $customer_id = $_SESSION['customer_id'];
-                $data = [];
-                $data['customer_id'] = $customer_id;
-                try {
-                    $addCart->addQuery($data); // Create a new cart entry
-                    $cart = $showCart->showRecords("customer_id = $customer_id", "id DESC");
-                    $_SESSION['cart_id'] = $cart[0][0]; // Set cart_id session variable
-                } catch (Exception $e) {
-                    echo "Error: $e";
-                }
-                
-                // Add the product to the newly created cart
-                $product = [];
-                foreach ($_POST as $name => $value) {
-                    if($name!="add_to_cart" && $name!="price")
-                        $product[$name] = $value;
-                }
-                $product['sub_price'] = $_POST['quantity'] * $_POST['price'];
-                $product['cart_id'] = $_SESSION['cart_id'];
-                try {
-                    $action = $addList->addQuery($product);
-                } catch (Exception $e) {
-                    echo "Error: $e";
-                }
-            }
-        }
-    }
+    $showCustomer = new Show($conn, 'customer');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,16 +23,16 @@
     max-width: 968px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: auto 1fr; /* Image on the left, text on the right */
+    grid-template-columns: auto 1fr; 
     align-items: center;
     gap: 1.5rem;
-    margin-bottom: 40px; /* Increase the bottom margin for more space */
+    margin-bottom: 40px; 
 }
 
 .about img {
-    max-width: 100%; /* Ensure the image is responsive */
-    height:auto; /* Ensure the image maintains its aspect ratio */
-    max-width: 200px; /* Adjust the maximum width as needed */
+    max-width: 100%; 
+    height:auto; 
+    max-width: 200px; 
 }
 
 
@@ -130,24 +47,24 @@
 }
 
 .about .btn {
-    background-color: #b8860b; /* Dirty yellow color */
-    color: #fff; /* Text color */
+    background-color: #b8860b; 
+    color: #fff; 
 }
 
 .about .btn:hover {
-    background-color: #cdad00; /* Darker dirty yellow color on hover */
+    background-color: #cdad00; 
 }
 
 .slideshow {
     max-width: 968px;
-    margin: 40px auto; /* Increase the top margin for more space */
+    margin: 40px auto; 
     overflow: hidden;
     position: relative;
     margin-top: 40px;
 }
 .slides {
     display: flex;
-    animation: slide 20s linear infinite; /* Adjust duration as needed */
+    animation: slide 20s linear infinite; 
 }
 
 .slides img {
@@ -180,7 +97,7 @@ button {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-100%); /* Adjust based on the number of images */
+        transform: translateX(-100%); 
     }
 }
 
