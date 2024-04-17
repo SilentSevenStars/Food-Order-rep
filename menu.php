@@ -14,60 +14,60 @@
     $addList = new Add($conn, 'list');
     $addCart = new Add($conn, 'cart');
 
-    if(isset($_POST['add_to_cart'])){
-        if(!isset($_SESSION['customer_id'])){
-            header("Location: cart.php");
-        } else {
-            if(isset($_SESSION['cart_id'])){
-                $cart_id = $_SESSION['cart_id'];
-                $list = $showList->showRecords("cart_id = $cart_id AND product_id  = ". $_POST['product_id']);
-                if(count($list) > 0){
-                    $data =[];
-                    $quantity = $_POST['quantity'];
-                    $sub_price = $_POST['quantity'] * $_POST['price'];
-                    $query = "UPDATE list SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ". $_POST['product_id'];
-                    $result = $conn->query($query);
-                } else {
-                    $data = [];
-                    foreach ($_POST as $name => $value) {
-                        if($name!="add_to_cart" && $name!="price")
-                            $data[$name] = $value;
-                    }
-                    $data['sub_price'] = $_POST['quantity'] * $_POST['price'];
-                    $data['cart_id'] = $_SESSION['cart_id'];
-                    try {
-                        $action = $addList->addQuery($data);
-                    } catch (Exception $e) {
-                        echo "Error: $e";
-                    }
-                } 
-            } else {
-                $customer_id = $_SESSION['customer_id'];
-                $data = [];
-                $data['customer_id'] = $customer_id;
-                try {
-                    $addCart->addQuery($data); 
-                    $cart = $showCart->showRecords("customer_id = $customer_id", "id DESC");
-                    $_SESSION['cart_id'] = $cart[0][0]; // Set cart_id session variable
-                } catch (Exception $e) {
-                    echo "Error: $e";
-                }
+    // if(isset($_POST['add_to_cart'])){
+    //     if(!isset($_SESSION['customer_id'])){
+    //         header("Location: cart.php");
+    //     } else {
+    //         if(isset($_SESSION['cart_id'])){
+    //             $cart_id = $_SESSION['cart_id'];
+    //             $list = $showList->showRecords("cart_id = $cart_id AND product_id  = ". $_POST['product_id']);
+    //             if(count($list) > 0){
+    //                 $data =[];
+    //                 $quantity = $_POST['quantity'];
+    //                 $sub_price = $_POST['quantity'] * $_POST['price'];
+    //                 $query = "UPDATE list SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ". $_POST['product_id'];
+    //                 $result = $conn->query($query);
+    //             } else {
+    //                 $data = [];
+    //                 foreach ($_POST as $name => $value) {
+    //                     if($name!="add_to_cart" && $name!="price")
+    //                         $data[$name] = $value;
+    //                 }
+    //                 $data['sub_price'] = $_POST['quantity'] * $_POST['price'];
+    //                 $data['cart_id'] = $_SESSION['cart_id'];
+    //                 try {
+    //                     $action = $addList->addQuery($data);
+    //                 } catch (Exception $e) {
+    //                     echo "Error: $e";
+    //                 }
+    //             } 
+    //         } else {
+    //             $customer_id = $_SESSION['customer_id'];
+    //             $data = [];
+    //             $data['customer_id'] = $customer_id;
+    //             try {
+    //                 $addCart->addQuery($data); 
+    //                 $cart = $showCart->showRecords("customer_id = $customer_id", "id DESC");
+    //                 $_SESSION['cart_id'] = $cart[0][0]; // Set cart_id session variable
+    //             } catch (Exception $e) {
+    //                 echo "Error: $e";
+    //             }
                 
-                $product = [];
-                foreach ($_POST as $name => $value) {
-                    if($name!="add_to_cart" && $name!="price")
-                        $product[$name] = $value;
-                }
-                $product['sub_price'] = $_POST['quantity'] * $_POST['price'];
-                $product['cart_id'] = $_SESSION['cart_id'];
-                try {
-                    $action = $addList->addQuery($product);
-                } catch (Exception $e) {
-                    echo "Error: $e";
-                }
-            }
-        }
-    }
+    //             $product = [];
+    //             foreach ($_POST as $name => $value) {
+    //                 if($name!="add_to_cart" && $name!="price")
+    //                     $product[$name] = $value;
+    //             }
+    //             $product['sub_price'] = $_POST['quantity'] * $_POST['price'];
+    //             $product['cart_id'] = $_SESSION['cart_id'];
+    //             try {
+    //                 $action = $addList->addQuery($product);
+    //             } catch (Exception $e) {
+    //                 echo "Error: $e";
+    //             }
+    //         }
+    //     }
+    // }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,7 +116,7 @@
                             if($product_count < 3){
                                 $category = $showCategory->showRecords("id = $product[2]");
                                 echo "<div class='col-12 col-md-6 col-lg-4'>
-                                        <form action='' method='post'>
+                                        <form action='form/cartHanle.php' method='post'>
                                             <div class='card'>
                                                 <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
                                                 <div class='card-body'>
@@ -148,7 +148,7 @@
                             if($product_count < 3){
                                 $category = $showCategory->showRecords("id = $product[2]");
                                 echo "<div class='col-12 col-md-6 col-lg-4'>
-                                    <form action='' method='post'>
+                                    <form action='form/cartHandle.php' method='post'>
                                         <div class='card'>
                                             <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
                                             <div class='card-body'>
@@ -181,7 +181,7 @@
                             if($product_count < 3){
                                 $category = $showCategory->showRecords("id = $product[2]");
                                 echo "<div class='col-12 col-md-6 col-lg-4'>
-                                        <form action='' method='post'>
+                                        <form action='form/cartHandle.php' method='post'>
                                             <div class='card'>
                                                 <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
                                                 <div class='card-body'>
@@ -212,6 +212,19 @@
     </section>
 
     <script src="js/sweetalert2.js"></script>
+    <script src="js/sweetalert.js"></script>
+    <script>
+        <?php
+            if(isset($_SESSION['message'])){
+                echo "swal({
+                    title: '".$_SESSION['message']."',
+                    icon: 'success',
+                    button: 'Okay',
+                });";
+                unset($_SESSION['message']);
+            }
+        ?>
+    </script>
     <script>
         <?php
             if(isset($_SESSION['login'])){
