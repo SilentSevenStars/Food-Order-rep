@@ -75,7 +75,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="login.css">
 </head>
-<body style="background: #272c36; color: #fff;">
+<body>
     <div class="container">
         <div class="box form-box">
             <header>Login</header>
@@ -112,18 +112,6 @@
                     button: 'Okay',
                 });";
                 unset($_SESSION['message']);
-            }
-        ?>
-    </script>
-    <script>
-        <?php
-            if(isset($_SESSION['cart_login'])){
-                echo "swal({
-                    title: '".$_SESSION['cart_login']."',
-                    icon: 'info',
-                    button: 'Okay',
-                });";
-                unset($_SESSION['cart_login']);
             }
         ?>
     </script>

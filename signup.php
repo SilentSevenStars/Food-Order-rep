@@ -40,11 +40,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
     <title>Register</title>
     <link rel="stylesheet" href="login.css">
 </head>
-<body style="background: #272c36; color: #fff;">
+<body>
     <div class="container">
         <div class="box form-box">
         <header>Sign Up</header>
@@ -77,6 +76,10 @@
                 <div class="field input">
                     <label for="password_confirmation">Confirm Password</label>
                     <input type="password" name="cpassword" id="password_confirmation" autocomplete="on" required>
+                </div>
+
+                <div class="links">
+                    Already have an account? <a href="login.php">Login</a>
                 </div>
 
                 <div class="ok">

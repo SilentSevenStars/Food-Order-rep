@@ -39,50 +39,100 @@
             </div>
             <div class="row row-cols-1 rows-cols-md-3 g-4 py-5">
                 <?php
-                    $carts = $showCart->showRecords("customer_id = ".$_SESSION['customer_id'], "id DESC");
-                    $customer = $showCustomer->showRecords("id = ".$_SESSION['customer_id']);
-                    if(count($carts) > 0){
-                        foreach ($carts as $cart) {
-                            $orders = $showOrder->showRecords("cart_id = $cart[0]");
-                            if(count($orders) > 0){
-                                foreach ($orders as $order) {
-                                    echo "<div class='card' style='border-radius: 15px;'>";
-                                    echo "<div class='card-header'>";
-                                    echo "<div class='row'>";
-                                    echo "<div class='col-lg-6 col-12'>";
-                                    echo "<h3>Order: ".$order[0]."</h3>";
-                                    echo "</div>";
-                                    echo "<div class='col-lg-6 col-12'>";
-                                    echo "<h3>Payment Status: ".$order[5]."</h3>";
-                                    echo "</div>";
-                                    echo "</div>"; 
-                                    echo "</div>"; 
-                                    echo "<div class='card-body'>";
-                                    echo "<h4 class='card-title text-center'>Product items:</h4>";
-                                    echo "<div class='row'>";
-                                    $lists = $showList->showRecords("cart_id = $cart[0]"); 
-                                    if(count($lists) > 0){
-                                        foreach ($lists as $list) { 
-                                            echo "<div class='col-md-4'>";
-                                            $product = $showProduct->showRecords("id = $list[1]");
-                                            echo  "<h4>".$product[0][1]."</h4>";
-                                            echo  "<p>Quantity: ".$list[2]."</p>";
-                                            echo  "<p>Total Price: ".$list[3]."</p>";
-                                            echo "</div>";
-                                        }
-                                    }
-                                    echo "</div>"; // Close row
-                                    echo "<h4 class='card-title'>Total Price: ".$order[3]."</h4>";
-                                    echo "<h4 class='card-title'>Place on: ".$order[4]."</h4>";
-                                    echo "</div>"; // Close card-body
-                                    echo "</div>"; // Close card
-                                }
+                $carts = $showCart->showRecords("customer_id = ".$_SESSION['customer_id'], "id DESC");
+                $customer = $showCustomer->showRecords("id = ".$_SESSION['customer_id']);
+                if(count($carts) > 0){
+                    foreach ($carts as $cart) {
+                        $orders = $showOrder->showRecords("cart_id = $cart[0]");
+                        if(count($orders) > 0){
+                            foreach ($orders as $order) {
+                ?>
+                <div class="card card-1">
+                    <div class="card-header bg-white">
+                        <div class="media flex-sm-row flex-column-reverse justify-content-between">
+                            <div class="col my-auto">
+                                <h4 class="mb-0">Order<span class="change-color">#<?= $order[0] ?></span></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-between mb-3">
+                            <div class="col-auto">
+                                <h6 class="color-1 mb-0 change-color">Receipt</h6>
+                            </div>
+                        </div>
+                        <?php
+                        $lists = $showList->showRecords("cart_id = $cart[0]");
+                        if(count($lists) > 0){
+                            foreach ($lists as $list) { 
+                                $product = $showProduct->showRecords("id = $list[1]");
+                        ?>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card card-2">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="sq align-self-center">
+                                                <img class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="upload_img/<?= $product[0][4] ?>" width="135" height="135" />
+                                            </div>
+                                            <div class="media-body my-auto text-right">
+                                                <div class="row  my-auto flex-column flex-md-row">
+                                                    <div class="col my-auto">
+                                                        <h6 class="mb-0"><?= $product[0][1] ?></h6>
+                                                    </div>
+                                                    <div class="col my-auto">
+                                                        <small>Price per item : <?= $product[0][3] ?></small>
+                                                    </div>
+                                                    <div class="col my-auto">
+                                                        <small>Qty : <?= $list[3] ?></small>
+                                                    </div>
+                                                    <div class="col my-auto">
+                                                        <h6 class="mb-0">&#8377;<?= $list[3] ?></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <hr class="my-3 ">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <small>Track Order <span><i class="ml-2 fa fa-refresh" aria-hidden="true"></i></span></small>
+                        </div>
+                        <div class="col mt-auto">
+                            <div class="progress my-auto">
+                                <div class="progress-bar progress-bar  rounded" style="width: 62%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="media row justify-content-between ">
+                                <div class="col-auto text-right">
+                                    <span><small class="text-right mr-sm-2"></small><i class="fa fa-circle active"></i></span>
+                                </div>
+                                <div class="flex-col">
+                                    <span><small class="text-right mr-sm-2">Out for delivery</small><i class="fa fa-circle active"></i></span>
+                                </div>
+                                <div class="col-auto flex-col-auto">
+                                    <small class="text-right mr-sm-2">Delivered</small><span><i class="fa fa-circle"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
                             }
                         }
                     }
+                }
                 ?>
             </div>
         </div>
     </section>
+    
 </body>
 </html>

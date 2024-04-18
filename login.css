@@ -1,3 +1,9 @@
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.507), rgba(0, 0, 0, 0.438)), url(hero.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
 .container {
     display: flex;
     align-items: center;
@@ -6,10 +12,10 @@
 }
 
 .box {
-    background: #121212;
+    background: #fff;
     display: flex;
     flex-direction: column;
-    padding: 25px 25px;
+    padding: 50px;
     margin: 3px;
     border-radius: 20px;
     box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
@@ -43,9 +49,9 @@
     border-radius: 5px;
     border: 1px solid #ccc;
     outline: none;
-    background-color: #3b3b3b;
-    color: #fff;
+    background-color: #fff;
 }
+
 .btn {
     height: 35px;
     background: rgba(76, 68, 182, 0.808);

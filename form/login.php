@@ -23,8 +23,6 @@
             echo "Incorrect email or password";
         }
     }
-
-    // Logout functionality
     if(isset($_GET['logout'])) {
         session_destroy();
         header("Location: login.php");
@@ -38,16 +36,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../login.css">
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
-<body class="container">
-    <form action="" method="post">
-        <label for="" class="form-label">Email</label>
-        <input type="text" name="email" id="" class="form-control">
-        <label for="" class="form-label">Password</label>
-        <input type="password" name="password" id="" class="form-control">
-        <input type="submit" value="Login" name="Login" class="btn btn-primary">
-    </form>
-    <br>
+<body>
+    <div class="container">
+        <div class="box form-box">
+            <header>Login</header>
+            <?php if(isset($error)): ?>
+                <div class="error"><?php echo $error; ?></div>
+            <?php endif; ?>
+            <form action="" method="post">
+                <div class="field input">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" autocomplete="on" required>
+                </div>
+
+                <div class="field input">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" autocomplete="on" required>
+                </div>
+
+                <div class="field">
+                    <input type="submit" class="btn" name="Login" value="Login">
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
