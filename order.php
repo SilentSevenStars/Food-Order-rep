@@ -6,9 +6,14 @@
     require 'component/show.php';
 
     if(!isset($_SESSION['customer_id'])){
-        $_SESSION['login'] = true;
-        header("Location: ".$_SESSION['link']);
-        exit; 
+        if(isset($_SESSION['link'])){
+            $_SESSION['login'] = true;
+            header("Location: ".$_SESSION['link']);
+        } else {
+            $_SESSION['login'] = true;
+            header("Location: index.php");
+        }
+        
     }
 
     unset($_SESSION['cart_id']);
@@ -81,13 +86,13 @@
                                                         <h6 class="mb-0"><?= $product[0][1] ?></h6>
                                                     </div>
                                                     <div class="col my-auto">
-                                                        <small>Price per item : <?= $product[0][3] ?></small>
+                                                        <p style="font-size: 20px;">Price per item : <?= $product[0][3] ?></p>
                                                     </div>
                                                     <div class="col my-auto">
-                                                        <small>Qty : <?= $list[3] ?></small>
+                                                        <p style="font-size: 20px;">Quantity : <?= $list[2] ?></p>
                                                     </div>
                                                     <div class="col my-auto">
-                                                        <h6 class="mb-0">&#8377;<?= $list[3] ?></h6>
+                                                        <h6 class="mb-0" style="font-size: 20px;">&#8369;<?= $list[3] ?></h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,21 +109,21 @@
                     <hr class="my-3 ">
                     <div class="row">
                         <div class="col-md-3 mb-3">
-                            <small>Track Order <span><i class="ml-2 fa fa-refresh" aria-hidden="true"></i></span></small>
+                            <h4>Track Order <span></span></h4>
                         </div>
                         <div class="col mt-auto">
-                            <div class="progress my-auto">
-                                <div class="progress-bar progress-bar  rounded" style="width: 62%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div>
+                                <h4>Total Amount: &#8369;<?= $order[3] ?></h4>
                             </div>
                             <div class="media row justify-content-between ">
                                 <div class="col-auto text-right">
-                                    <span><small class="text-right mr-sm-2"></small><i class="fa fa-circle active"></i></span>
+                                    <span><small class="text-right mr-sm-2"></small></span>
                                 </div>
                                 <div class="flex-col">
-                                    <span><small class="text-right mr-sm-2">Out for delivery</small><i class="fa fa-circle active"></i></span>
+                                    <span><small class="text-right mr-sm-2">Out for delivery</small></span>
                                 </div>
                                 <div class="col-auto flex-col-auto">
-                                    <small class="text-right mr-sm-2">Delivered</small><span><i class="fa fa-circle"></i></span>
+                                    <small class="text-right mr-sm-2">Delivered</small><span></span>
                                 </div>
                             </div>
                         </div>
@@ -128,6 +133,8 @@
                             }
                         }
                     }
+                } else {
+                    echo "This order has been remove";
                 }
                 ?>
             </div>

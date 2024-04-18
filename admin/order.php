@@ -53,65 +53,105 @@
                     <div class="row">
                         <?php
                             $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                            $paginationData = $showOrder->showRecordsWithPagination($currentPage, 6, "id DESC");
+                            $paginationData = $showOrder->showRecordsWithPagination($currentPage, 3, "id DESC");
                             $orders = $paginationData['records'];
                             if(count($orders) > 0){
-                                $order_count = 0;
                                 foreach ($orders as $order) {
-                                    $cart = $showCart->showRecords("id = $order[1]");
-                                    $customer = $showCustomer->showRecords("id = ".$cart[0][1]);;
-                                    if($order_count < 6){
-                                        echo "<div class='col-lg-4 col-md-6'>";
-                                        echo "<form method='post'>";
-                                        echo "<input type='hidden' name='order_id' value='$order[0]'>";
-                                        echo "<div class='card border-0'>";
-                                        echo "<div class='card-header'>";
-                                        echo "<h5 class='card-title'>".$order[0]."</h5>";
-                                        echo "";
-                                        echo "</div>";
-                                        echo "<div class='card-body'>";
-                                        echo "<h5 class='card-title'>Name: ".$customer[0][1]."</h5>";
-                                        echo "<h5 class='card-title'>Phone Number: ".$customer[0][3]."</h5>";
-                                        echo "<h5 class='card-title'>Email: ".$customer[0][2]."</h5>";
-                                        echo "<h5 class='card-title'>Address: ".$customer[0][4]."</h5>";
-                                        echo "<h5 class='card-title'>Payment Method: ".$order[2]."</h5>";
-                                        echo "<h5 class='card-title'>Product items:</h5>";
-                                        echo "<div>";
-                                        $lists = $showList->showRecords("cart_id = ".$cart[0][0]); 
-                                        if(count($lists) > 0){
-                                            $list_count = 0;
-                                            foreach ($lists as $list) {
-                                                echo "<div class='row'>"; 
-                                                $product = $showProduct->showRecords("id = $list[1]");
-                                                echo  "<h6>".$product[0][1]."</h6>";
-                                                echo "</div><div class='col'>";
-                                                echo  "<h6>Quantity: ".$list[2]."</h6>";
-                                                echo "</div> <div class='col'>";
-                                                echo  "<h6>Total Price: ".$list[3]."</h6>";
-                                                echo "</div>";
-                                            }
+                                    $carts = $showCart->showRecords("id = $order[1]");
+                                    if(count($carts) > 0){
+                                        $customer = $showCustomer->showRecords("id = ".$carts[0][1]);
+                                        if(count($customer) > 0){
+                        ?>
+                        <div class="card card-1">
+                            <div class="card-header">
+                                <div class="media flex-sm-row flex-column-reverse justify-content-between">
+                                    <div class="col my-auto">
+                                        <h4 class="mb-0">Order<span class="change-color">#<?= $order[0] ?></span></h4>
+                                        <h4 class='mb-0'>Name: <?= $customer[0][1] ?></h4>
+                                        <h4 class='mb-0'>Phone Number: <?= $customer[0][3] ?></h4>
+                                        <h4 class='mb-0'>Email: <?= $customer[0][2] ?></h4>
+                                        <h4 class='mb-0'>Address: <?= $customer[0][4] ?></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row justify-content-between mb-3">
+                                    <div class="col-auto">
+                                        <h6 class="color-1 mb-0 change-color">Receipt</h6>
+                                    </div>
+                                </div>
+                                <?php
+                                    $lists = $showList->showRecords("cart_id = ".$carts[0][0]);
+                                    if(count($lists) > 0){
+                                        foreach ($lists as $list) { 
+                                            $product = $showProduct->showRecords("id = $list[1]");
+                                ?>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card card-2">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="sq align-self-center">
+                                                        <img class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="../upload_img/<?= $product[0][4] ?>" width="135" height="135" />
+                                                    </div>
+                                                    <div class="media-body my-auto text-right">
+                                                        <div class="row  my-auto flex-column flex-md-row">
+                                                            <div class="col my-auto">
+                                                                <h6 class="mb-0"><?= $product[0][1] ?></h6>
+                                                            </div>
+                                                            <div class="col my-auto">
+                                                                <p style="font-size: 20px;">Price per item : <?= $product[0][3] ?></p>
+                                                            </div>
+                                                            <div class="col my-auto">
+                                                                <p style="font-size: 20px;">Quantity : <?= $list[2] ?></p>
+                                                            </div>
+                                                            <div class="col my-auto">
+                                                                <h6 class="mb-0" style="font-size: 20px;">&#8369;<?= $list[3] ?></h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
                                         }
-                                        echo "</div>";
-                                        echo "<h4 class='card-title'>Total Price: ".$order[3]."</h4>";
-                                        echo "<label class='form-label'>Payment Status</label>";
-                                        echo "<select name='payment_status' class='form-select'>";
-                                        echo "<option value='".$order[5]."' selected>".$order[5]."</option>";
-                                        if($order != "Complete")
-                                            echo "<option value='Complete'>Complete</option>";
-                                        else 
-                                            echo "<option value='Not completed'>Not completed</option>";
-                                        echo "</select>";
-                                        echo "</div>";
-                                        echo "<div class='card-footer'>";
-                                        echo "<input type='submit' class='btn btn-primary' value='Submit' name='update'>";
-                                        echo "</div>";
-                                        echo "</div>";
-                                        echo "</form>";
-                                        echo "</div>";
-                                        $order_count++;
+                                    }
+                                ?>
+                            </div>
+                            <hr class="my-3 ">
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <h4>Track Order <span></span></h4>
+                                </div>
+                                <div class="col mt-auto">
+                                    <div>
+                                        <h4>Total Amount: &#8369;<?= $order[3] ?></h4>
+                                    </div>
+                                    <div class="media row justify-content-between ">
+                                        <div class="col-auto text-right">
+                                            <span><small class="text-right mr-sm-2"></small></span>
+                                        </div>
+                                        <div class="flex-col">
+                                            <span><small class="text-right mr-sm-2">Out for delivery</small></span>
+                                        </div>
+                                        <div class="col-auto flex-col-auto">
+                                            <small class="text-right mr-sm-2">Delivered</small><span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                                            } else {
+                                                echo "This customer doesn't exist";
+                                            }
+                                        } else {
+                                            echo "This order has been deleted";
+                                        }
                                     }
                                 }
-                            }
                         ?>
                     </div>
                     <nav class="d-flex justify-content-center" aria-label="Page navigation example">
@@ -135,6 +175,7 @@
             </main>
         </div>
     </div>
+
 
     <script src="../js/script.js"></script>
 </body>
