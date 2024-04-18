@@ -211,20 +211,8 @@
         </div>
     </section>
 
-    <script src="js/sweetalert2.js"></script>
     <script src="js/sweetalert.js"></script>
-    <script>
-        <?php
-            if(isset($_SESSION['message'])){
-                echo "swal({
-                    title: '".$_SESSION['message']."',
-                    icon: 'success',
-                    button: 'Okay',
-                });";
-                unset($_SESSION['message']);
-            }
-        ?>
-    </script>
+    <script src="js/sweetalert2.js"></script>
     <script>
         <?php
             if(isset($_SESSION['login'])){
@@ -235,6 +223,18 @@
                     html: '<a class=\"btn btn-primary\" href=\"login.php\">Login</a>&nbsp;&nbsp;<a class=\"btn btn-success\" href=\"signup.php\">Sign Up</a>',
                 });";
                 unset($_SESSION['login']);
+            }
+        ?>
+    </script>
+    <script>
+        <?php
+            if(isset($_SESSION['message'])){
+                echo "swal({
+                    title: '".$_SESSION['message']."',
+                    icon: 'success',
+                    button: 'Okay',
+                });";
+                unset($_SESSION['message']);
             }
         ?>
     </script>

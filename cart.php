@@ -10,8 +10,14 @@
     $showProduct = new Show($conn, 'product');
 
     if(!isset($_SESSION['customer_id'])){
-        $_SESSION['login']  = true;
-        header("Location: ".$_SESSION['link']);
+        if(!isset($_SESSION['link'])){
+            $_SESSION['login'] = true;
+            header("Location: index.php");
+        }        
+        else {
+            $_SESSION['login']  = true;
+            header("Location: ".$_SESSION['link']);
+        }
     }
 
     if(isset($_POST['update'])){
@@ -123,5 +129,30 @@
             </div>
         </div>
     </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.quantity').on('change', function(){
+                var quantity = $(this).val();
+                var product_id = $(this).closest('form').find('.product_id').val();
+                var product_price = $(this).closest('form').find('.product_price').val();
+                var sub_total_element = $(this).closest('tr').find('.sub_total');
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'form/update_cart.php', // Update with the path to your PHP script
+                    data: {
+                        quantity: quantity,
+                        product_id: product_id,
+                        product_price: product_price
+                    },
+                    success: function(data){
+                        sub_total_element.text('$' + parseFloat(data).toFixed(2));
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

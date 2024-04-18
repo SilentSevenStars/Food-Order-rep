@@ -15,7 +15,7 @@
 
     if(isset($_POST['add_to_cart'])){
         if(!isset($_SESSION['customer_id'])){
-            $_SESSION['login'] = "Hello World";
+            $_SESSION['login'] = true;
             header("Location: ../menu.php");
         } else {
             if(isset($_SESSION['cart_id'])){
