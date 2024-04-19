@@ -9,7 +9,7 @@
     $add = new Add($conn, 'customer');
 
     if(isset($_POST['add'])) {
-        $match = $show->showRecords("name = '".$_POST['name']."' OR email = '".$_POST['email']>"'");
+        $match = $show->showRecords("name = '".$_POST['name']."' OR email = '".$_POST['email']."'");
         if(count($match) > 0){
             $_SESSION['message'] = "Name or Email are already exist";
         } else {

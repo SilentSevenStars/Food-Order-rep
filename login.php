@@ -6,7 +6,7 @@
 
     $show = new Show($conn, 'customer');
     $showCart = new Show($conn, 'cart');
-    $showOrder = new Show($conn, 'order');
+    $showOrder = new Show($conn, 'orders');
     $addCart = new Add($conn, 'cart');
 
 
@@ -22,11 +22,11 @@
 
                 $customer_id = $data[0][0]; 
 
-                $cart = $showCart->showRecords("'customer_id' = $customer_id", "id DESC");
+                $cart = $showCart->showRecords("customer_id = $customer_id", "id DESC");
 
                 if(count($cart) > 0){
                     $cart_id = $cart[0][0];
-                    $order = $showOrder->showRecords("'cart_id' = '$cart_id'");
+                    $order = $showOrder->showRecords("cart_id = $cart_id");
 
                     if(count($order) > 0){
                         $data = [];
