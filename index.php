@@ -230,7 +230,40 @@
                             }
                         }
                     } else {
-                        echo "<div class='alert alert-danger'>No food </div>'";
+                        echo "<div class='alert alert-danger'>No food Available</div>'";
+                    }
+                } elseif (isset($_GET['cat_id'])) {
+                    $products = $showProduct->showRecords("category_id = ".$_GET['cat_id']);
+                    if(count($products) > 0){
+                        $product_count = 0;
+                        foreach ($products as $product) {
+                            if($product_count < 3){
+                                $category = $showCategory->showRecords("id = $product[2]");
+                                echo "<div class='col-12 col-md-6 col-lg-4'>
+                                    <form action='form/cartHandle.php' method='post'>
+                                        <div class='card'>
+                                            <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
+                                            <div class='card-body'>
+                                                <h5 class='card-title'>".$product[1]."</h5>
+                                                <h5 class='card-title text-muted'>".$category[0][1]."</h5>
+                                                <input type='number' name='quantity' value='1' min='1' class='form-control'>
+                                                <div class='d-flex justify-content-around my-2'>
+                                                    <h3>P".$product[3]."</h3>
+                                                    <button type='submit' class='btn btn-primary' name='add_to_cart'><i class='bi bi-cart'></i></button>
+                                                    <input type='hidden' name='product_id' value='".$product[0]."'>
+                                                    <input type='hidden' name='price' value='".$product[3]."'>
+                                                </div>
+                                            </div>             
+                                        </div>
+                                    </form>
+                                </div>";
+                                $product_count++;
+                            } else {
+                                
+                            }
+                        }
+                    } else {
+                        echo "<div class='alert alert-danger'>No food Available</div>'";
                     }
                 } else {
                     $products = $showProduct->showRecords();
