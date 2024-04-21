@@ -2,6 +2,8 @@
     require 'component/connection.php';
     require 'component/show.php';
 
+    session_start();
+
     $showProduct = new Show($conn, 'product');
     $showCategory = new Show($conn, 'category');
 ?>
@@ -20,7 +22,7 @@
             background-size: cover;
         }
 
-        /* Center the search form */
+
         #search {
             margin-top: 50px; /* Adjust as needed */
         }
@@ -51,9 +53,9 @@
                     if(count($data) > 0){
                         $product_count = 0;
                         foreach ($data as $key => $product) {
-                            if($product_count < 3){
+                            if($product_count < 4){
                                 $category = $showCategory->showRecords("id = $product[2]");
-                                echo "<div class='col'>
+                                echo "<div class='col-12 col-md-6 col-lg-4 col-xl-3'>
                                             <form action='' method='post'>
                                                 <div class='card'>
                                                     <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>

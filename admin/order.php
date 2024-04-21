@@ -53,7 +53,7 @@
                     <div class="row">
                         <?php
                             $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                            $paginationData = $showOrder->showRecordsWithPagination($currentPage, 3, "id DESC");
+                            $paginationData = $showOrder->showRecordsWithPagination($currentPage, null,3, "id DESC");
                             $orders = $paginationData['records'];
                             if(count($orders) > 0){
                                 foreach ($orders as $order) {
@@ -122,12 +122,24 @@
                             </div>
                             <hr class="my-3 ">
                             <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <h4>Track Order <span></span></h4>
+                                <div class="mb-3">
+                                    <h4>Total Amount: &#8369;<?= $order[3] ?></h4>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Payment status</label>
+                                    <select name="" id="" class="form-select">
+                                        <?php
+                                            echo "<option value='".$order[5]."' selected>".$order[5]."</option>";
+                                            if($order[5] === 'Ongoing')
+                                                echo "<option value='Complete'>Complete</option>";
+                                            else 
+                                                echo "<option value='Ongoing'>Ongoing</option>";
+                                        ?>
+                                    </select>
                                 </div>
                                 <div class="col mt-auto">
                                     <div>
-                                        <h4>Total Amount: &#8369;<?= $order[3] ?></h4>
+                                        
                                     </div>
                                     <div class="media row justify-content-between ">
                                         <div class="col-auto text-right">
@@ -151,9 +163,17 @@
                                             echo "This order has been deleted";
                                         }
                                     }
+                                } else {
+                                    echo "<div class='alert alert-danger text-center fs-3 fw-semibold'>No order</div>";
                                 }
                         ?>
                     </div>
+                    <?php
+                        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $paginationData = $showOrder->showRecordsWithPagination($currentPage, null,3, "id DESC");
+                        $orders = $paginationData['records'];
+                        if(count($orders) > 0){
+                    ?>
                     <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                         <ul class="pagination">
                             <?php if ($currentPage > 1): ?>
@@ -171,6 +191,9 @@
                             <?php endif; ?>
                         </ul>
                     </nav>
+                    <?php
+                        }
+                    ?>
                 </div>
             </main>
         </div>

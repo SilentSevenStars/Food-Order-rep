@@ -47,7 +47,7 @@
                         <?php
                             $show = new Show($conn, 'category');
                             $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                            $paginationData = $show->showRecordsWithPagination($currentPage, 10);
+                            $paginationData = $show->showRecordsWithPagination($currentPage, null, 10, null);
                             $categories = $paginationData['records'];
                         ?>
                         <div class="card-body table-responsive container">

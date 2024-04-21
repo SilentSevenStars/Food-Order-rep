@@ -86,12 +86,26 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <style>
-         .c-item{
+        .nav-link{
+            transition: all 1s;
+        }
+        .nav-link:hover{
+            border-bottom: 1px solid yellow;
+        }
+        .c-item{
             height: 480px;
         }
         .c-img{
             height: 100%;
             object-fit: cover;
+        }
+        @media(max-width: 600px){
+            #blog{
+                display: none;
+            }
+        }
+        .contact li .hover:hover{
+            color: yellow;
         }
     </style>
 </head>
@@ -107,7 +121,7 @@
             </div>
             <div class="carousel-inner c-item">
                 <div class="carousel-item active">
-                    <img src="project images/pizza-hero.jpg" class="d-block w-100 c-img" alt="...">
+                    <img src="image/pizza-hero.jpg" class="d-block w-100 c-img" alt="...">
                     <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                         <h5 class="mt-5 display-1 fw-bolder">50% Off All Pizzas</h5>
                         <p class="fs-3">Enjoy a 50% discount on all pizzas. Limited time offer!</p>
@@ -115,19 +129,19 @@
                     </div>
                 </div>
                 <div class="carousel-item c-item">
-                    <img src="project images/dessert-hero.jpg" class="d-block w-100 c-img" alt="...">
+                    <img src="image/dessert-hero.jpg" class="d-block w-100 c-img" alt="...">
                     <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                         <h5 class="mt-5 display-1 fw-bolder">Free Dessert with Every Order</h5>
                         <p class="fs-3">Get a free dessert with every order above $20.</p>
-                        <p class="fs-2">>Expires on: May 15, 2024</p>
+                        <p class="fs-2">Expires on: May 15, 2024</p>
                     </div>
                 </div>
                 <div class="carousel-item c-item">
-                    <img src="project images/combo-hero.jpg" class="d-block w-100 c-img" alt="...">
+                    <img src="image/combo-hero.jpg" class="d-block w-100 c-img" alt="...">
                     <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                         <h5 class="mt-5 display-1 fw-bolder">Combo Meal Deal</h5>
                         <p class="fs-3">Save big with our combo meal deal. Includes entree, side, and drink.</p>
-                        <p class="fs-2">No expiry dat</p>
+                        <p class="fs-2">No expiry date</p>
                     </div>
                 </div>
             </div>
@@ -172,9 +186,9 @@
                     if(count($products) > 0){
                         $product_count = 0;
                         foreach ($products as $product) {
-                            if($product_count < 3){
+                            if($product_count < 4){
                                 $category = $showCategory->showRecords("id = $product[2]");
-                                echo "<div class='col-12 col-md-6 col-lg-4'>
+                                echo "<div class='col-12 col-md-6 col-lg-4 col-xl-3'>
                                         <form action='' method='post'>
                                             <div class='card'>
                                                 <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
@@ -204,9 +218,9 @@
                     if(count($products) > 0){
                         $product_count = 0;
                         foreach ($products as $product) {
-                            if($product_count < 3){
+                            if($product_count < 4){
                                 $category = $showCategory->showRecords("id = $product[2]");
-                                echo "<div class='col-12 col-md-6 col-lg-4'>
+                                echo "<div class='col-12 col-md-6 col-lg-4 col-xl-3'>
                                     <form action='form/cartHandle.php' method='post'>
                                         <div class='card'>
                                             <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
@@ -237,9 +251,9 @@
                     if(count($products) > 0){
                         $product_count = 0;
                         foreach ($products as $product) {
-                            if($product_count < 3){
+                            if($product_count < 4){
                                 $category = $showCategory->showRecords("id = $product[2]");
-                                echo "<div class='col-12 col-md-6 col-lg-4'>
+                                echo "<div class='col-12 col-md-6 col-lg-4 col-xl-3'>
                                     <form action='form/cartHandle.php' method='post'>
                                         <div class='card'>
                                             <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
@@ -270,9 +284,9 @@
                     if(count($products) > 0){
                         $product_count = 0;
                         foreach ($products as $product) {
-                            if($product_count < 3){
+                            if($product_count < 4){
                                 $category = $showCategory->showRecords("id = $product[2]");
-                                echo "<div class='col-12 col-md-6 col-lg-4'>
+                                echo "<div class='col-12 col-md-6 col-lg-4 col-xl-3'>
                                         <form action='form/cartHandle.php' method='post'>
                                             <div class='card'>
                                                 <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>

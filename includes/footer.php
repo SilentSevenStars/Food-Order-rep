@@ -31,19 +31,18 @@
             </div>
             <div class="col-md-4 col-lg-3 col-xl-4 mx-auto-3 mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact</h5>
-                
-                <p>
-                    <a href="" class="text-white" style="text-decoration: none;"></a>
-                </p>
-                <p>
-                    <a href="" class="text-white" style="text-decoration: none;"></a>
-                </p>
-                <p>
-                    <a href="" class="text-white" style="text-decoration: none;"></a>
-                </p>
-                <p>
-                    <a href="" class="text-white" style="text-decoration: none;"></a>
-                </p>
+                <ul>
+                    <li style="list-style: none;">
+                        <a href="" class="text-white" style="text-decoration: none;"><i class="bi bi-geo-alt-fill"></i> Lupao, Nueva Ecija</a>
+                    </li>
+                    <li style="list-style: none;">
+                        <a href="" class="text-white" style="text-decoration: none;"><i class="bi bi-envelope-at-fill"></i> Foodies@gmail.com</a>
+                    </li>
+                    <li style="list-style: none;">
+                        <a href=""  class="text-white" style="text-decoration: none;"><i class="bi bi-telephone-fill"></i> +63911-123-1234</a>
+                    </li>
+                </ul>
+               
             </div>
         </div>
         <hr class="mb-4">

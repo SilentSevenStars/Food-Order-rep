@@ -24,7 +24,18 @@
                     <a class="nav-link" href="search.php"><i class="bi bi-search" style="font-size: 18px;"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cart.php"><i class="bi bi-cart" style="font-size: 18px;"></i></a>
+                    <a class="nav-link" href="cart.php"><i class="bi bi-cart" style="font-size: 18px;"></i>[
+                        <?php
+                            $query = "SELECT COUNT(product_id) AS total FROM list WHERE cart_id = ".$_SESSION['cart_id'];
+                            $result = $conn->query($query);
+                            if ($result->num_rows > 0) {
+                                $row = $result->fetch_assoc();
+                                echo $row['total'];
+                            } else {
+                                echo 0;
+                            }
+                        ?>    
+                    ]</a>
                 </li>
                 
                 <?php
@@ -43,8 +54,8 @@
                                 <i class="bi bi-person"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">Profile</a>
-                                <a href="#" class="dropdown-item">Setting</a>
+                                <a href="changeProfile.php" class="dropdown-item">Change Profile</a>
+                                <a href="changePassword.php" class="dropdown-item">Change Password</a>
                                 <a href="logout.php" class="dropdown-item">Logout</a>
                             </div>
                         </li>

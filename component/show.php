@@ -39,14 +39,18 @@
             return $this->sqlExecute($sql);
         }
 
-        public function showRecordsWithPagination($page = 1, $limit = NULL, $order = null) {
+        public function showRecordsWithPagination($page = 1, $where =null, $limit = NULL, $order = null) {
             $offset = ($page - 1) * $limit;
             $sql = "SELECT COUNT(*) AS total FROM $this->tbl";
             $result = $this->conn->query($sql);
             $totalRecords = $result->fetch_assoc()['total'];
             $totalPages = ceil($totalRecords / $limit);
-            if($order != null){
+            if($order != null && $where==null){
                 $sql = "SELECT * FROM $this->tbl ORDER BY $order LIMIT $limit OFFSET $offset";
+            } elseif ($where != null && $order == null) {
+                $sql = "SELECT * FROM $this->tbl WHERE $where LIMIT $limit OFFSET $offset";
+            } elseif ($where != null && $order != null) {
+                $sql = "SELECT * FROM $this->tbl WHERE $where ORDER BY $order LIMIT $limit OFFSET $offset";
             } else {
                 $sql = "SELECT * FROM $this->tbl LIMIT $limit OFFSET $offset";
             }

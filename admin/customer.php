@@ -49,7 +49,7 @@
                         <?php
                             $show = new Show($conn, 'customer');
                             $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                            $paginationData = $show->showRecordsWithPagination($currentPage, 10);
+                            $paginationData = $show->showRecordsWithPagination($currentPage,null, 10, null);
                             $customers = $paginationData['records'];
                         ?>
                         <div class="card-body table-responsive">

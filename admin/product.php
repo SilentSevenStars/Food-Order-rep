@@ -51,7 +51,7 @@
                         <?php
                             $show = new Show($conn, 'product');
                             $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                            $paginationData = $show->showRecordsWithPagination($currentPage, 10);
+                            $paginationData = $show->showRecordsWithPagination($currentPage,null, 10,null);
                             $products = $paginationData['records'];
                             $showCategory = new Show($conn, 'category');
                         ?>
