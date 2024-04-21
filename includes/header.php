@@ -26,11 +26,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="cart.php"><i class="bi bi-cart" style="font-size: 18px;"></i>[
                         <?php
-                            $query = "SELECT COUNT(product_id) AS total FROM list WHERE cart_id = ".$_SESSION['cart_id'];
-                            $result = $conn->query($query);
-                            if ($result->num_rows > 0) {
-                                $row = $result->fetch_assoc();
-                                echo $row['total'];
+                            if(isset($_SESSION['cart_id'])){
+                                $query = "SELECT COUNT(product_id) AS total FROM list WHERE cart_id = ".$_SESSION['cart_id'];
+                                $result = $conn->query($query);
+                                if ($result->num_rows > 0) {
+                                    $row = $result->fetch_assoc();
+                                    echo $row['total'];
+                                } else {
+                                    echo 0;
+                                }
                             } else {
                                 echo 0;
                             }

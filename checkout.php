@@ -19,7 +19,8 @@
                 $data[$name] = $value;
         }
         $data['cart_id'] = $_SESSION['cart_id'];
-        $data['payment_status'] = 'not completed';
+        $data['payment_status'] = 'Ongoing';
+        $data['service'] = 'Ongoing';
         try {
             $action = $add->addQuery($data);
             header("Location: order.php");

@@ -86,11 +86,11 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <style>
-        .nav-link{
-            transition: all 1s;
-        }
         .nav-link:hover{
-            border-bottom: 1px solid yellow;
+            font-weight: bold;
+        }
+        .nav-link .bi:hover{
+            color: red;
         }
         .c-item{
             height: 480px;
@@ -212,6 +212,11 @@
                             }
                             
                         }
+                    } else {
+                        echo "
+                            <div class='container text-center py-5'>
+                                <h5 class='alert alert-danger'>No food available</h5>
+                            </div>";
                     }
                 } elseif (isset($_POST['cat'])) {
                     $products = $showProduct->showRecords("category_id = ".$_POST['category_id']);
@@ -244,7 +249,10 @@
                             }
                         }
                     } else {
-                        echo "<div class='alert alert-danger'>No food Available</div>'";
+                        echo "
+                        <div class='container text-center py-5'>
+                            <h5 class='alert alert-danger'>No food available in this category</h5>
+                        </div>";
                     }
                 } elseif (isset($_GET['cat_id'])) {
                     $products = $showProduct->showRecords("category_id = ".$_GET['cat_id']);
@@ -277,7 +285,10 @@
                             }
                         }
                     } else {
-                        echo "<div class='alert alert-danger'>No food Available</div>'";
+                        echo "
+                        <div class='container text-center py-5'>
+                            <h5 class='alert alert-danger'>No food available in this category</h5>
+                        </div>";
                     }
                 } else {
                     $products = $showProduct->showRecords();
@@ -310,6 +321,11 @@
                             }
                             
                         }
+                    } else {
+                        echo "
+                        <div class='container text-center py-5'>
+                            <h5 class='alert alert-danger'>No food available</h5>
+                        </div>";
                     }
                 }
             ?>
