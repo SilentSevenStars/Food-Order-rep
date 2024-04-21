@@ -6,7 +6,7 @@
 
     session_start();
 
-    $showList = new Show($conn, 'list');
+    $showList = new Show($conn, 'lists');
     $showProduct = new Show($conn, 'product');
 
     if(!isset($_SESSION['customer_id'])){
@@ -27,7 +27,7 @@
         $product_id = $_POST['product_id'];
         $sub_price = $product_price *  $quantity;
 
-        $query = "UPDATE list SET quantity = ".$quantity.", sub_price = ".$sub_price." WHERE cart_id = '".$cart_id."' AND product_id = '".$product_id."'";
+        $query = "UPDATE lists SET quantity = ".$quantity.", sub_price = ".$sub_price." WHERE cart_id = '".$cart_id."' AND product_id = '".$product_id."'";
         $result = $conn->query($query);
 
     }
@@ -35,7 +35,7 @@
         $cart_id = $_SESSION['cart_id'];
         $product_id = $_POST['product_id'];
 
-        $query = "DELETE FROM list WHERE cart_id = '".$cart_id."' AND product_id = '".$product_id."'";
+        $query = "DELETE FROM lists WHERE cart_id = '".$cart_id."' AND product_id = '".$product_id."'";
         $result = $conn->query($query);
     }
 ?>
@@ -130,7 +130,7 @@
         </div>
     </section> -->
     <section id="cart">
-        <div class="container-fluid mt-5">
+        <div class="container mt-5">
             <h2 class="mb-2 text-center">Shopping Cart</h2>
             <div class="row justify-content-center">
                 <div class="col-md-8">

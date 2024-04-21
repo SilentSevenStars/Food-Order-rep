@@ -20,7 +20,7 @@
     $showCart = new Show($conn, 'cart');
     $showCustomer = new Show($conn, 'customer');
     $showProduct = new Show($conn, 'product');
-    $showList = new Show($conn, '`list`');
+    $showList = new Show($conn, 'lists');
     $showOrder = new Show($conn, 'orders');
 ?>
 <!DOCTYPE html>
@@ -41,16 +41,33 @@
         <div class="container">
             <div class="row">
                 <h1 class="text-center">Order</h1>
+                <div class="col-12">
+                    <div class="d-flex justify-content-center flex-md-row flex-column align-items-md-center">
+                        <form action="" method="post">
+                            <input type="hidden" name="services" value="Ongoing">
+                            <button type="submit" name="serv" class="btn btn-outline">Ongoing</button>
+                        </form>
+                        <form action="" method="post">
+                            <input type="hidden" name="services" value="Ready">
+                            <button type="submit" name="serv" class="btn btn-outline">Ready</button>
+                        </form>
+                        <form action="" method="post">
+                            <input type="hidden" name="services" value="Complete">
+                            <button type="submit" name="serv" class="btn btn-outline">Complete</button>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="row row-cols-1 rows-cols-md-3 g-4 py-5">
                 <?php
-                $carts = $showCart->showRecords("customer_id = ".$_SESSION['customer_id'], "id DESC");
-                $customer = $showCustomer->showRecords("id = ".$_SESSION['customer_id']);
-                if(count($carts) > 0){
-                    foreach ($carts as $cart) {
-                        $orders = $showOrder->showRecords("cart_id = $cart[0]");
-                        if(count($orders) > 0){
-                            foreach ($orders as $order) {
+                    if(isset($_POST['serv'])){
+                    $carts = $showCart->showRecords("customer_id = ".$_SESSION['customer_id'], "id DESC");
+                    $customer = $showCustomer->showRecords("id = ".$_SESSION['customer_id']);
+                    if(count($carts) > 0){
+                        foreach ($carts as $cart) {
+                            $orders = $showOrder->showRecords("cart_id = $cart[0] AND service = '".$_POST['services']."'");
+                            if(count($orders) > 0){
+                                foreach ($orders as $order) {
                 ?>
                 <div class="card card-1">
                     <div class="card-header bg-white">
@@ -120,21 +137,22 @@
                                     <span><small class="text-right mr-sm-2"></small></span>
                                 </div>
                                 <div class="flex-col">
-                                    <span><small class="text-right mr-sm-2">Out for delivery</small></span>
+                                    <span><small class="text-right mr-sm-2">Payment Status: <?= $order[5] ?></small></span>
                                 </div>
                                 <div class="col-auto flex-col-auto">
-                                    <small class="text-right mr-sm-2">Delivered</small><span></span>
+                                    <small class="text-right mr-sm-2">Service: <?= $order[6] ?></small><span></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php
+                                }
                             }
                         }
+                    } else {
+                        echo "This order has been remove";
                     }
-                } else {
-                    echo "This order has been remove";
                 }
                 ?>
             </div>

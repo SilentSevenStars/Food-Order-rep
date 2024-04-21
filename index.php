@@ -10,8 +10,8 @@
     $showProduct = new Show($conn, 'product');
     $showCategory = new Show($conn, 'category');
     $showCart = new Show($conn, 'cart');
-    $showList = new Show($conn, 'list');
-    $addList = new Add($conn, 'list');
+    $showList = new Show($conn, 'lists');
+    $addList = new Add($conn, 'lists');
     $addCart = new Add($conn, 'cart');
 
     if(isset($_POST['add_to_cart'])){
@@ -25,7 +25,7 @@
                     $data =[];
                     $quantity = $_POST['quantity'];
                     $sub_price = $_POST['quantity'] * $_POST['price'];
-                    $query = "UPDATE list SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ". $_POST['product_id'];
+                    $query = "UPDATE lists SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ". $_POST['product_id'];
                     $result = $conn->query($query);
                     if($result){
                         $_SESSION['message'] = "Update product successfully";
@@ -226,7 +226,7 @@
                             if($product_count < 4){
                                 $category = $showCategory->showRecords("id = $product[2]");
                                 echo "<div class='col-12 col-md-6 col-lg-4 col-xl-3'>
-                                    <form action='form/cartHandle.php' method='post'>
+                                    <form action='' method='post'>
                                         <div class='card'>
                                             <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
                                             <div class='card-body'>
@@ -262,7 +262,7 @@
                             if($product_count < 4){
                                 $category = $showCategory->showRecords("id = $product[2]");
                                 echo "<div class='col-12 col-md-6 col-lg-4 col-xl-3'>
-                                    <form action='form/cartHandle.php' method='post'>
+                                    <form action='' method='post'>
                                         <div class='card'>
                                             <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
                                             <div class='card-body'>
@@ -298,7 +298,7 @@
                             if($product_count < 4){
                                 $category = $showCategory->showRecords("id = $product[2]");
                                 echo "<div class='col-12 col-md-6 col-lg-4 col-xl-3'>
-                                        <form action='form/cartHandle.php' method='post'>
+                                        <form action='' method='post'>
                                             <div class='card'>
                                                 <img class='card-img-top img' src='upload_img/".$product[4]."' alt='Card image cap' style='height: 300px; width: auto;'>
                                                 <div class='card-body'>

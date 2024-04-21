@@ -8,14 +8,15 @@
     $showOrder = new Show($conn, 'orders');
     $showCart = new Show($conn, 'cart');
     $showCustomer = new Show($conn, 'customer');
-    $showList = new Show($conn, '`list`');
+    $showList = new Show($conn, 'lists');
     $showProduct = new Show($conn, 'product');
 
     if(isset($_POST['update'])){
         $id = $_POST['order_id'];
         $payment_status = $_POST['payment_status'];
+        $service = $_POST['service'];
 
-        $sql = "UPDATE orders SET payment_status = '$payment_status' WHERE id = '$id'";
+        $sql = "UPDATE orders SET payment_status = '$payment_status', service='$service' WHERE id = '$id'";
         $conn->query($sql);
     }
 ?>
@@ -46,21 +47,37 @@
             </nav>
             <main class="content px-3 py-2">
                 <div class="container-fluid">
-                    <div class="mb-3">
-                        <h4>Order Details</h4>
+                    <div class="row">
+                        <h4 class="text-center">Order Details</h4>
+                        <div class="col-12">
+                            <div class="d-flex justify-content-center flex-md-row flex-column align-items-md-center">
+                                <form action="" method="post">
+                                    <input type="hidden" name="services" value="Ongoing">
+                                    <button type="submit" name="serv" class="btn btn-outline">Ongoing</button>
+                                </form>
+                                <form action="" method="post">
+                                    <input type="hidden" name="services" value="Ready">
+                                    <button type="submit" name="serv" class="btn btn-outline">Ready</button>
+                                </form>
+                                <form action="" method="post">
+                                    <input type="hidden" name="services" value="Complete">
+                                    <button type="submit" name="serv" class="btn btn-outline">Complete</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    
                     <div class="row">
                         <?php
-                            $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                            $paginationData = $showOrder->showRecordsWithPagination($currentPage, null,3, "id DESC");
-                            $orders = $paginationData['records'];
-                            if(count($orders) > 0){
-                                foreach ($orders as $order) {
-                                    $carts = $showCart->showRecords("id = $order[1]");
-                                    if(count($carts) > 0){
-                                        $customer = $showCustomer->showRecords("id = ".$carts[0][1]);
-                                        if(count($customer) > 0){
+                            if(isset($_POST['serv'])){
+                                $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+                                $paginationData = $showOrder->showRecordsWithPagination($currentPage, "service='".$_POST['services']."'",3, "id DESC");
+                                $orders = $paginationData['records'];
+                                if(count($orders) > 0){
+                                    foreach ($orders as $order) {
+                                        $carts = $showCart->showRecords("id = $order[1]");
+                                        if(count($carts) > 0){
+                                            $customer = $showCustomer->showRecords("id = ".$carts[0][1]);
+                                            if(count($customer) > 0){
                         ?>
                         <div class="card card-1">
                             <div class="card-header">
@@ -71,6 +88,7 @@
                                         <h4 class='mb-0'>Phone Number: <?= $customer[0][3] ?></h4>
                                         <h4 class='mb-0'>Email: <?= $customer[0][2] ?></h4>
                                         <h4 class='mb-0'>Address: <?= $customer[0][4] ?></h4>
+                                        <h4 class='mb-0'>Payment Method: <?= $order[2] ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -91,9 +109,6 @@
                                         <div class="card card-2">
                                             <div class="card-body">
                                                 <div class="media">
-                                                    <div class="sq align-self-center">
-                                                        <img class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="../upload_img/<?= $product[0][4] ?>" width="135" height="135" />
-                                                    </div>
                                                     <div class="media-body my-auto text-right">
                                                         <div class="row  my-auto flex-column flex-md-row">
                                                             <div class="col my-auto">
@@ -125,55 +140,48 @@
                                 <div class="mb-3">
                                     <h4>Total Amount: &#8369;<?= $order[3] ?></h4>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Payment status</label>
-                                    <select name="" id="" class="form-select">
-                                        <?php
-                                            echo "<option value='".$order[5]."' selected>".$order[5]."</option>";
-                                            if($order[5] === 'Ongoing')
-                                                echo "<option value='Complete'>Complete</option>";
-                                            else 
-                                                echo "<option value='Ongoing'>Ongoing</option>";
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col mt-auto">
-                                    <div>
-                                        
+                                <form action="" method="post">
+                                    <input type="hidden" name="order_id" value="<?= $order[0] ?>">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Payment status</label>
+                                        <select name="payment_status" id="" class="form-select">
+                                            <?php
+                                                echo "<option value='".$order[5]."' selected>".$order[5]."</option>";
+                                                if($order[5] === 'Ongoing')
+                                                    echo "<option value='Complete'>Complete</option>";
+                                                else 
+                                                    echo "<option value='Ongoing'>Ongoing</option>";
+                                            ?>
+                                        </select>
                                     </div>
-                                    <div class="media row justify-content-between ">
-                                        <div class="col-auto text-right">
-                                            <span><small class="text-right mr-sm-2"></small></span>
-                                        </div>
-                                        <div class="flex-col">
-                                            <span><small class="text-right mr-sm-2">Out for delivery</small></span>
-                                        </div>
-                                        <div class="col-auto flex-col-auto">
-                                            <small class="text-right mr-sm-2">Delivered</small><span></span>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Service</label>
+                                        <select name="service" id="" class="form-select">
+                                            <?php
+                                                echo "<option value='".$order[6]."' selected>".$order[6]."</option>";
+                                                if($order[6] != 'Ongoing'){
+                                                    echo "<option value='Ongoing'>Ongoing</option>";
+                                                }
+                                                if($order[6] != "Ready"){
+                                                    echo "<option value='Ready'>Ready</option>";
+                                                }    
+                                                if($order[6] != "Complete"){
+                                                    echo "<option value='Complete'>Complete</option>";
+                                                }
+                                            ?>
+                                        </select>
                                     </div>
-                                </div>
+                                    <button type="submit" name="update" class="btn btn-primary">Update</button>
+                                </form>
                             </div>
                         </div>
                         <?php
-                                            } else {
-                                                echo "This customer doesn't exist";
                                             }
-                                        } else {
-                                            echo "This order has been deleted";
                                         }
                                     }
-                                } else {
-                                    echo "<div class='alert alert-danger text-center fs-3 fw-semibold'>No order</div>";
                                 }
                         ?>
                     </div>
-                    <?php
-                        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                        $paginationData = $showOrder->showRecordsWithPagination($currentPage, null,3, "id DESC");
-                        $orders = $paginationData['records'];
-                        if(count($orders) > 0){
-                    ?>
                     <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                         <ul class="pagination">
                             <?php if ($currentPage > 1): ?>
@@ -194,6 +202,7 @@
                     <?php
                         }
                     ?>
+                    
                 </div>
             </main>
         </div>

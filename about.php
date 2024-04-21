@@ -1,6 +1,13 @@
 <?php
     session_start();
+
+    require 'component/connection.php';
+    require 'component/show.php';
+
     $_SESSION['link'] = "about.php";
+
+    $showCategory = new Show($conn, 'category');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

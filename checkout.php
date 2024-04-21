@@ -8,7 +8,7 @@
     $showCart = new Show($conn, 'cart');
     $showCustomer = new Show($conn, 'customer');
     $showProduct = new Show($conn, 'product');
-    $showList = new Show($conn, 'list');
+    $showList = new Show($conn, 'lists');
 
     $add = new Add($conn, 'orders');
 
@@ -71,9 +71,9 @@
                             echo "<label class='form-label'>Payment Method</label>
                                     <select name='payment_method' class='form-select'>
                                         <option value='none' selected>Select Payment Method</option>
-                                        <option value='gcash'>GCASH</option>
-                                        <option value='credit_card'>Credit Card</option>
-                                        <option value='cash_on_delivery'>Cash on delivery</option>
+                                        <option value='GCASH'>GCASH</option>
+                                        <option value='Credit Card'>Credit Card</option>
+                                        <option value='Cashier'>Cashier</option>
                                     </select>";
                             echo "</div>";
                             echo "<input type='hidden' name='place_on' value='".date('Y-m-d')."'>";
