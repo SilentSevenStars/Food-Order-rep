@@ -5,171 +5,255 @@
     require 'component/add.php';
 
     session_start();
-    $_SESSION['link'] = "index.php";
-
-    $pid = $_GET['pid'] ?? NULL;
-    if(!isset($_GET['pid']))
-        header("Location: index.php");
+    $_SESSION['link'] = "menu.php";
 
     $showProduct = new Show($conn, 'product');
     $showCategory = new Show($conn, 'category');
     $showCart = new Show($conn, 'cart');
     $showList = new Show($conn, 'lists');
+    $showReview = new Show($conn, 'reviews');
     $addList = new Add($conn, 'lists');
     $addCart = new Add($conn, 'cart');
 
+    if(!isset($_GET['pid']))
+        header("Location: menu.php");
+    $pid = $_GET['pid'] ?? NULL;
+
     if(isset($_POST['add_to_cart'])){
-        // Your logic for adding to cart
+        if(!isset($_SESSION['customer_id'])){
+            $_SESSION['login'] = true;
+        } else {
+            if(isset($_SESSION['cart_id'])){
+                $cart_id = $_SESSION['cart_id'];
+                $list = $showList->showRecords("cart_id = $cart_id AND product_id  = ". $_POST['product_id']);
+                if(count($list) > 0){
+                    $data =[];
+                    $quantity = $_POST['quantity'];
+                    $sub_price = $_POST['quantity'] * $_POST['price'];
+                    $query = "UPDATE lists SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ". $_POST['product_id'];
+                    $result = $conn->query($query);
+                    if($result){
+                        $_SESSION['message'] = "Update product successfully";
+                    }
+                    $_SESSION['message'] = "Update product successfully";
+                } else {
+                    $data = [];
+                    foreach ($_POST as $name => $value) {
+                        if($name!="add_to_cart" && $name!="price")
+                            $data[$name] = $value;
+                    }
+                    $data['sub_price'] = $_POST['quantity'] * $_POST['price'];
+                    $data['cart_id'] = $_SESSION['cart_id'];
+                    $action = $addList->addQuery($data);
+                    if($action){
+                        $_SESSION['message'] = "Added to cart Successfully";
+                    } else {
+                        echo "Error ";
+                    }
+                } 
+            } else {
+                $customer_id = $_SESSION['customer_id'];
+                $data = [];
+                $data['customer_id'] = $customer_id;
+                $action = $addCart->addQuery($data); 
+                if($action){
+                    $cart = $showCart->showRecords("customer_id = $customer_id", "id DESC");
+                    $_SESSION['cart_id'] = $cart[0][0]; 
+
+                    $product = [];
+                    foreach ($_POST as $name => $value) {
+                        if($name!="add_to_cart" && $name!="price")
+                            $product[$name] = $value;
+                    }
+                    $product['sub_price'] = $_POST['quantity'] * $_POST['price'];
+                    $product['cart_id'] = $_SESSION['cart_id'];
+
+                    $action = $addList->addQuery($product);
+                    if($action){
+                        $_SESSION['message'] = "Added to cart Succesfully";
+                    } else {
+                        echo "Error";
+                    }
+                }
+            }
+        }
     }
 
-    // Fetch product details
-    $product = $showProduct->showRecords("id = $pid");
-    if(count($product) > 0){
-        $category = $showCategory->showRecords("id = ".$product[0][2]);
-    }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Ordering System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="bootstrap-icons-1.11.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <style>
-        /* Your styles here */
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food View</title>
+  <link rel="stylesheet" href="bootstrap-icons-1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
 
-    <section id="details">
-        <div class="container py-4">
-            <div class="card">
-                <div class="card-body">
-                    <?php if(count($product) > 0 && count($category) > 0): ?>
-                        <form method='post'>
-                            <div class="row justify-content-center">
-                                <div class='col-md-6'>
-                                    <img src='upload_img/<?php echo $product[0][4]; ?>' class='img-fluid'>
+  <?php include 'includes/header.php' ?>
+
+  <section id="details">
+    <div class="container mt-4">
+        <div class="card">
+            <?php
+                $product = $showProduct->showRecords("id = $pid");
+                if(count($product) > 0){
+            ?>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="upload_img/<?= $product[0][4] ?>" alt="Food" class="img-fluid">
+                    </div>
+                    <div class="col-md-6 justify-content-center">
+                        <form action="" method="post">
+                            <input type="hidden" name="product_id">
+                            <h2><?= $product[0][1] ?></h2>
+                            <?php
+                                $category = $showCategory->showRecords("id = ".$product[0][2]);
+                                if(count($category) > 0){
+                            ?>
+                            <p><?= $category[0][1] ?></p>
+                            <?php } else { ?>
+                            <p>None</p>
+                            <?php } ?>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>Quantity: <input type="number" value="1" name="quantity"></p>
                                 </div>
-                                <div class='col-md-6'>
-                                    <input type='hidden' name='product_id' value='<?php echo $product[0][0]; ?>'>
-                                    <input type='hidden' name='price' value='<?php echo $product[0][3]; ?>'>
-                                    <h5 class='card-title'><?php echo $product[0][1]; ?></h5>
-                                    <p><?php echo $category[0][1]; ?></p>
-                                    <p>Price: <?php echo $product[0][3]; ?></p>
-                                    <p>Quantity: <input type='number' name='quantity' value='1' min='1' class='form-control'></p>
-                                    <button type='submit' class='btn btn-primary' name='add_to_cart'><i class='bi bi-cart'></i> Add to Cart</button>
+                                <div class="col-6">
+                                    <p>Price: <?= $product[0][3] ?></p>
+                                    <input type="hidden" name="price" value="<?= $product[0][3] ?>" class="form-control">
                                 </div>
                             </div>
+                            <button class="btn btn-primary">Add to Cart</button>
                         </form>
-                    <?php else: ?>
-                        <div class='col-md-12'>
-                            This Food isn't Available
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="text-center">Ratings</h2>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="text-center">Average Rating: 4.5</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-muted">&#9733;</span>
-                            </p>
-                            <p>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-warning">&#9733;</span>
-                            </p>
-                            <p>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-warning">&#9733;</span>
-                            </p>
-                            <p>
-                                <span class="text-warning">&#9733;</span>
-                                <span class="text-warning">&#9733;</span>
-                            </p>
-                            <p>
-                                <span class="text-warning">&#9733;</span>
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="rating">
-        <div class="container">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <h5>View Reviews</h5>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="btn btn-primary">Add reviews</div>
-                        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Ratings</h2>
+            </div>
+            <?php
+                $reviews = $showReview->showRecords("product_id = ".$pid);
+                if(count($reviews) > 0){
+                    $total = 0;
+                    $rating_1 = 0;
+                    $rating_2 = 0;
+                    $rating_3 = 0;
+                    $rating_4 = 0;
+                    $rating_5 = 0;
+                    foreach ($reviews as $review){
+                        $total_ratings += $review[1];
+                        if($review[1] == 1){
+                            $rating_1 += 1;
+                         }
+                         if($review[1] == 2){
+                            $rating_2 += 1;
+                         }
+                         if($review[1] == 3){
+                            $rating_3 += 1;
+                         }
+                         if($review[1] == 4){
+                            $rating_4 += 1;
+                         }
+                         if($review[1] == 5){
+                            $rating_5 += 1;
+                         }
+                    }
+                        $average = round($total_ratings / count($reviews), 1);
+            ?>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-center">Average Rating: <?= $average ?></p>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="media">
-                        <img src="user_avatar.jpg" class="mr-3 rounded-circle" alt="User Avatar" style="width: 64px;">
-                        <div class="media-body">
-                            <h5 class="mt-0">User Name</h5>
-                            Details of the review go here.
-                        </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li style="list-style: none;">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <span><?= $rating_5 ?></span>
+                            </li>
+                            <li style="list-style: none;">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <span><?= $rating_4 ?></span>
+                            </li>
+                            <li style="list-style: none;">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <span><?= $rating_3 ?></span>
+                            </li>
+                            <li style="list-style: none;">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <span><?= $rating_2 ?></span>
+                            </li>
+                            <li style="list-style: none;">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <span><?= $rating_1 ?></span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
+            <?php } else { ?>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-danger text-center">No reviews</div>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
         </div>
-    </section>
+    </div>
+  </section>
 
-    <?php include 'includes/footer.php' ?>
+  <section id="review">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h5>View Reviews</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="form/add_review.php?pid=<?= $pid ?>" class="btn btn-primary">Add reviews</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                
+            </div>
+        </div>
+    </div>
+  </section>
+  <?php } else { ?>
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger text-center">This food isn't available</div>
+            </div>
+        </div>
+    <?php } ?>
 
-    <script src="js/sweetalert2.js"></script>
-    <script src="js/sweetalert.js"></script>
-    <script>
-        <?php
-            if(isset($_SESSION['message'])){
-                echo "swal({
-                    title: '".$_SESSION['message']."',
-                    icon: 'success',
-                    button: 'Okay',
-                  });";
-                unset($_SESSION['message']);
-            }
-        ?>
-    </script>
-    <script>
-        <?php
-            if(isset($_SESSION['login'])){
-                echo "swal.fire({
-                    icon: 'info',
-                    title: 'Please login or sign up to continue',
-                    showConfirmButton: false,
-                    html: '<a class=\"btn btn-primary\" href=\"login.php\">Login</a>&nbsp;&nbsp;<a class=\"btn btn-success\" href=\"signup.php\">Sign Up</a>',
-                });";
-                unset($_SESSION['login']);
-            }
-        ?>
-    </script>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4 mt-4">
+    <div class="container text-center">
+      <p>&copy; 2024 Food View. All rights reserved.</p>
+    </div>
+  </footer>
+
 </body>
 </html>

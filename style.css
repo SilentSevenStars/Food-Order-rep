@@ -7,7 +7,7 @@
     font-weight: 500px;
 } */
 #hero{
-    background: linear-gradient(rgba(0, 0, 0, 0.507), rgba(0, 0, 0, 0.438)), url(hero.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.507), rgba(0, 0, 0, 0.438)), url(image/hero.jpg);
     background-position: center;
     background-size: cover;
 }

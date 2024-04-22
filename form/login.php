@@ -38,6 +38,13 @@
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../login.css">
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url(hero.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
     <div class="container">

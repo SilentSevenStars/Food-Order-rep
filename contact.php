@@ -1,3 +1,45 @@
+<?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/SMTP.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $subject = $_POST["subject"];
+    $message = $_POST["message"];
+
+    try {
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->SMTPAuth = true;
+
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPSecure = "ssl";
+        $mail->Port = 465;
+        $mail->Username = "kentjustine.mercado@clsu2.edu.ph";
+        $mail->Password = "ksvavpmwlkjzinzn";
+
+        $mail->isHTML(true);
+        $mail->setFrom($email, $name);
+        $mail->addAddress("kentjustine.mercado@clsu2.edu.ph");
+
+        $mail->Subject = $subject;
+        $mail->Body = $message;
+
+        $mail->send();
+        echo 'Message has been sent';
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +73,7 @@
         <div class="container contact">
             <div class="row shadow-sm">
                 <div class="col-md-7 p-5">
-                    <form action="" method="post">
+                    <form action="" method="POST">
                         <h4>Get in touch</h4>
                         <div class="mb-3">
                             <label for="" class="form-label">Name</label>
@@ -49,7 +91,7 @@
                             <label for="" class="form-label">Message</label>
                             <textarea name="message" id="" cols="30" rows="10" class="form-control" placeholder="Your message" required></textarea>
                         </div>
-                        <input type="submit" value="Send" name="Send" class="btn btn-primary">
+                        <input type="submit" value="send" name="send" class="btn btn-primary">
                     </form>
                 </div>
                 <div class="col-md-5 bg-warning p-4">
@@ -75,7 +117,5 @@
                 </div>
         </div>
     </div>
-
-
 </body>
 </html>

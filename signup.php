@@ -42,6 +42,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="login.css">
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url(hero.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
     <div class="container">

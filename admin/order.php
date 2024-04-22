@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require '../component/connection.php';
     require '../component/show.php';
     require '../component/delete.php';
