@@ -9,6 +9,7 @@
 
     $showProduct = new Show($conn, 'product');
     $showCategory = new Show($conn, 'category');
+    $showCustomer = new Show($conn, 'customer');
     $showCart = new Show($conn, 'cart');
     $showList = new Show($conn, 'lists');
     $showReview = new Show($conn, 'reviews');
@@ -140,7 +141,7 @@
             <?php
                 $reviews = $showReview->showRecords("product_id = ".$pid);
                 if(count($reviews) > 0){
-                    $total = 0;
+                    $total_ratings = 0;
                     $rating_1 = 0;
                     $rating_2 = 0;
                     $rating_3 = 0;
@@ -234,7 +235,43 @@
                 </div>
             </div>
             <div class="card-body">
-                
+                <?php
+                    $reviews = $showReview->showRecords(null, "id DESC", 10);
+                    if(count($reviews) > 0){
+                        foreach ($reviews as $review){
+                            $customer = $showCustomer->showRecords("id = $review[5]");
+                ?>
+                <div class="media">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php
+                                if(count($customer) > 0){
+                                    echo $customer[0][1];
+                                } else {
+                                    echo "Anonymous";
+                                }
+                            ?>
+                        </div>
+                        <div class="col-md-6">
+                            <i class="bi bi-star-fill text-warning"></i><?= $review[1] ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4><?= $review[2] ?></h4>
+                        </div>
+                        <div class="col">
+                            <p><?= $review[3] ?></p>
+                        </div>
+                    </div>
+                </div>
+                <?php  
+                        }
+                    } else {
+                        // No reviews section
+                        echo "<div class='alert alert-danger text-center'>No reviews available</div>";
+                    }
+                ?>
             </div>
         </div>
     </div>

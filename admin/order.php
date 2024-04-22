@@ -1,5 +1,9 @@
 <?php
     session_start();
+
+    if(!isset($_SESSION['admin'])){
+        header("Location: ../form/login.php");
+    }
     require '../component/connection.php';
     require '../component/show.php';
     require '../component/delete.php';
