@@ -4,7 +4,6 @@
     require 'component/connection.php';
     require 'component/show.php';
 
-    // $_SESSION['link'] = "about.php";
     $_SESSION['link'] = "about.php";
 
     $showCategory = new Show($conn, 'category');
@@ -15,7 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Ordering System</title>
+    <title>About Us</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-...">
     <link rel="stylesheet" href="bootstrap-icons-1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -119,7 +118,7 @@
                 </div>
             </section>
             
-            <section class="about px-4 pb-4" id="about"> <img src="image/about.jpg" alt=""> 
+            <section class="about px-4 pb-4" id="about">
                 <div class="about-text">
                     <span>About Us:</span>
                     <p>
