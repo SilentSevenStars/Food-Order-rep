@@ -67,18 +67,13 @@
 <div class="container">
     <h2>Delete Customer</h2>
 
-    <form action="" method="post" onsubmit="return confirmDelete()">
+    <form action="" method="post">
         <p>Are you sure you want to delete this customer?</p>
-        <input type="submit" value="Yes, delete" class="btn btn-danger">
+        <input type="submit" value="Yes, delete" class="btn btn-danger" name="delete">
         <a href="../admin/customer.php" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 
-<script>
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this customer?");
-    }
-</script>
 
 </body>
 </html>
