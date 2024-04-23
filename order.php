@@ -38,20 +38,20 @@
     <?php require 'includes/header.php'; ?>
 
     <section id="order">
-        <div class="container">
+        <div class="container pt-4">
             <div class="row">
                 <h1 class="text-center">Order</h1>
-                <div class="col-12">
-                    <div class="d-flex justify-content-center flex-md-row flex-column align-items-md-center">
-                        <form action="" method="post">
+                <div class="col-12 pt-3">
+                    <div class="d-flex justify-content-around flex-md-row flex-column align-items-md-center">
+                        <form class="border border-light shadow-sm rounded" action="" method="post">
                             <input type="hidden" name="services" value="Ongoing">
                             <button type="submit" name="serv" class="btn btn-outline">Ongoing</button>
                         </form>
-                        <form action="" method="post">
+                        <form class="border border-light shadow-sm rounded" action="" method="post">
                             <input type="hidden" name="services" value="Ready">
                             <button type="submit" name="serv" class="btn btn-outline">Ready</button>
                         </form>
-                        <form action="" method="post">
+                        <form class="border border-light shadow-sm rounded" action="" method="post">
                             <input type="hidden" name="services" value="Complete">
                             <button type="submit" name="serv" class="btn btn-outline">Complete</button>
                         </form>
@@ -69,7 +69,7 @@
                             if(count($orders) > 0){
                                 foreach ($orders as $order) {
                 ?>
-                <div class="card card-1">
+                <div class="card card-1 shadow rounded">
                     <div class="card-header bg-white">
                         <div class="media flex-sm-row flex-column-reverse justify-content-between">
                             <div class="col my-auto">
@@ -124,7 +124,7 @@
                         ?>
                     </div>
                     <hr class="my-3 ">
-                    <div class="row">
+                    <div class="row px-3">
                         <div class="col-md-3 mb-3">
                             <h4>Track Order <span></span></h4>
                         </div>
@@ -132,7 +132,7 @@
                             <div>
                                 <h4>Total Amount: &#8369;<?= $order[3] ?></h4>
                             </div>
-                            <div class="media row justify-content-between ">
+                            <div class="media row justify-content-between pb-3">
                                 <div class="col-auto text-right">
                                     <span><small class="text-right mr-sm-2"></small></span>
                                 </div>
