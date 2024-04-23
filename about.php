@@ -118,7 +118,7 @@
                 </div>
             </section>
             
-            <section class="about px-4 pb-4" id="about">
+            <section class="about px-4" id="about">
                 <div class="about-text">
                     <span>About Us:</span>
                     <p>
@@ -132,7 +132,6 @@
                     <p>
                     Foodies is powered by a dedicated team of food enthusiasts, tech experts, and customer support professionals who are committed to delivering excellence at every step. We are continuously innovating and improving our platform to enhance your food ordering experience and exceed your expectations.
                     </p>
-                    <a href="#" class="btn">Learn More<i class='bx bx-right-arrow-alt' ></i></a>
                 </div> 
             </section>
 
