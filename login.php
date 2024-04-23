@@ -71,14 +71,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>User Login</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="login.css">
 </head>
 <body style="background: #c8c4c9;">
     <div class="container">
         <div class="box form-box">
-            <header>Login</header>
+            <header>User Login</header>
             <?php if(isset($error)): ?>
                 <div class="error"><?php echo $error; ?></div>
             <?php endif; ?>
@@ -96,6 +96,11 @@
                 <div class="field">
                     <input type="submit" class="btn" name="submit" value="Login">
                 </div>
+
+                <div class="field">
+                    <button class='btn' onclick="window.location.href='../Food-Order-rep-main/form/login.php';">Admin Login</button>
+                </div>
+
                 <div class="links">
                     Don't have an account? <a href="signup.php">Sign Up Now</a>
                 </div>

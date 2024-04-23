@@ -29,20 +29,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Admin Login</title>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../login.css">
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-            background: #c8c4c9;
+            background: #e8e4c9;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="box form-box">
-            <header>Login</header>
+            <header>Admin Login</header>
             <?php if(isset($error)): ?>
                 <div class="error"><?php echo $error; ?></div>
             <?php endif; ?>
@@ -59,6 +59,10 @@
 
                 <div class="field">
                     <input type="submit" class="btn" name="Login" value="Login">
+                </div>
+
+                <div class="field">
+                    <button class='btn' onclick="window.location.href='../login.php';">User Login</button>
                 </div>
             </form>
         </div>
