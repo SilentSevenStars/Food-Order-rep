@@ -23,7 +23,7 @@
                 try {
                     $action = $add->addQuery($data);
                     $_SESSION['message'] = "New account created successfully";
-                    header('Location: login');
+                    header('Location: login.php');
                 } catch (Exception $e) {
                     echo "Error: $e";
                 }

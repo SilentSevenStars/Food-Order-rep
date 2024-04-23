@@ -120,7 +120,7 @@
     <section class="about" id="about"> <img src="image/about.jpg" alt=""> 
         <div class="about-text">
             <span>About Us:</span>
-             <p>Lorem ipsum dolor sit, amet consectetur adipeagiueurgnherigjioegnrgnrtnibrbnwrvbnerijegvtrnisicing elit. Quo neque consed </p>
+             <p>Why Choose Us </p>
              <p>Lorem ipsum dolor, sit amet consectetur adipuyfhuerhguerhuehrf8erj8j89bjt98guje88eg87herggr89wrw89isicing elit. Dolorum, optio v </p>
              <a href="#" class="btn">Learn More<i class='bx bx-right-arrow-alt' ></i></a>
       </div> 

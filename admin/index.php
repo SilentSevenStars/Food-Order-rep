@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Admin Dashboard</title>
+    <title>Admin Dashboard</title>
     <!-- bootstrap link  -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <script src="../bootstrap/js/bootstrap.bundle.js"></script>
@@ -129,7 +129,7 @@
                                         <div class="flex-grow-1">
                                             <h4 class="mb-2">
                                                 <?php
-                                                    $query = "SELECT COUNT(*) AS total FROM orders WHERE payment_status = 'not completed'";
+                                                    $query = "SELECT COUNT(*) AS total FROM orders WHERE service = 'Ongoing'";
                                                     $result = mysqli_query($conn, $query);
                                                     $row = $result->fetch_assoc();
                                                     echo $row['total'];
@@ -137,6 +137,50 @@
                                             </h4>
                                             <p class="mb-2">
                                                Orders
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 d-flex">
+                            <div class="card flex-fill border-0">
+                                <div class="card-body py-4">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h4 class="mb-2">
+                                                <?php
+                                                    $query = "SELECT COUNT(*) AS total FROM orders WHERE service = 'Ready'";
+                                                    $result = mysqli_query($conn, $query);
+                                                    $row = $result->fetch_assoc();
+                                                    echo $row['total'];
+                                                ?>
+                                            </h4>
+                                            <p class="mb-2">
+                                                Food Ready
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 d-flex">
+                            <div class="card flex-fill border-0">
+                                <div class="card-body py-4">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h4 class="mb-2">
+                                                <?php
+                                                    $query = "SELECT COUNT(*) AS total FROM orders WHERE service = 'Complete'";
+                                                    $result = mysqli_query($conn, $query);
+                                                    $row = $result->fetch_assoc();
+                                                    echo $row['total'];
+                                                ?>
+                                            </h4>
+                                            <p class="mb-2">
+                                               Order Complete
                                             </p>
                                         </div>
                                     </div>
