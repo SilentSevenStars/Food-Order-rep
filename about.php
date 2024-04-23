@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="bootstrap-icons-1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <style>
         .about {
@@ -75,7 +74,7 @@
             height: auto;
         }
 
-        button {
+        /* button {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -85,7 +84,7 @@
             cursor: pointer;
             padding: 10px;
             z-index: 1;
-        }
+        } */
 
         .prev {
             left: 0;
@@ -105,35 +104,47 @@
         }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php include 'includes/header.php'; ?>
 
-    <section id="latest">
-        <div class="container py-5">
-            <div class="row">
-                <h1 class="text-center">About Us</h1>
-                
+    <div class="container py-4">
+        <div class="border border-light shadow rounded">
+            <section class="pt-4" id="latest">
+                <div class="container pt-4">
+                    <div class="row">
+                        <h1 class="text-center">About Us</h1>
+                        
+                    
+                </div>
+            </section>
             
-        </div>
-    </section>
-    
-    <section class="about" id="about"> <img src="image/about.jpg" alt=""> 
-        <div class="about-text">
-            <span>About Us:</span>
-             <p>Lorem ipsum dolor sit, amet consectetur adipeagiueurgnherigjioegnrgnrtnibrbnwrvbnerijegvtrnisicing elit. Quo neque consed </p>
-             <p>Lorem ipsum dolor, sit amet consectetur adipuyfhuerhguerhuehrf8erj8j89bjt98guje88eg87herggr89wrw89isicing elit. Dolorum, optio v </p>
-             <a href="#" class="btn">Learn More<i class='bx bx-right-arrow-alt' ></i></a>
-      </div> 
-    </section>
+            <section class="about px-4 pb-4" id="about"> <img src="image/about.jpg" alt=""> 
+                <div class="about-text">
+                    <span>About Us:</span>
+                    <p>
+                    Welcome to Foodies, your go-to destination for convenient and delightful food ordering experiences! At Foodies, we are passionate about bringing delicious meals right to your doorstep with just a few clicks. Whether you're craving your favorite comfort food or eager to explore new culinary delights, we've got you covered.
+                    </p>
+                    <span>Our Mission:</span>
+                    <p>
+                    Our mission at Foodies is to revolutionize the way you experience food. We believe that everyone deserves access to a wide variety of cuisines and flavors, no matter where they are. By leveraging technology and partnering with top-rated restaurants, we strive to make food ordering seamless, enjoyable, and hassle-free for our users.
+                    </p>
+                    <span>Our Team:</span>
+                    <p>
+                    Foodies is powered by a dedicated team of food enthusiasts, tech experts, and customer support professionals who are committed to delivering excellence at every step. We are continuously innovating and improving our platform to enhance your food ordering experience and exceed your expectations.
+                    </p>
+                    <a href="#" class="btn">Learn More<i class='bx bx-right-arrow-alt' ></i></a>
+                </div> 
+            </section>
 
-    <section class="slideshow">
-        <div class="slides">
-            <img src="image/image1.jpg" alt="">
-            <img src="image/image2.jpg" alt="">
-            <img src="image/image3.jpg" alt="">
+            <section class="slideshow">
+                <div class="slides">
+                    <img src="image/image1.jpg" alt="">
+                    <img src="image/image2.jpg" alt="">
+                    <img src="image/image3.jpg" alt="">
+                </div>
+            </section>
         </div>
-
-    </section>
+    </div>
 
     <?php include 'includes/footer.php' ?>
 
