@@ -42,9 +42,46 @@
     <?php include 'includes/header.php'; ?>
 
     <div class="container">
-        <h1 class="text-center fw-bold display-1">Checkout</h1>
-        <div class="row">
-            <div class="col-md-6">
+        <h1 class="text-center fw-bold display-1 pt-2">Checkout</h1>
+        <div class="row border rounded shadow mb-4">
+            <div class="col-md-6 py-5 mt-3 ">
+                <div class="border rounded">
+                    <div class="p-2">
+                        <h3 class="text-center">Order Summary</h3>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <th>Items</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $lists = $showList->showRecords("cart_id = ".$_SESSION["cart_id"]);
+                                        if(count($lists) > 0){
+                                            $total_price = 0;
+                                            foreach ($lists as $list) {
+                                                echo "<tr>";
+                                                echo "<form method='post'>";
+                                                $product = $showProduct->showRecords("id = $list[1]");
+                                                echo "<td>".$product[0][1]."</td>";
+                                                echo "<td>".$list[2]."</td>";
+                                                echo "<td>₱".$list[3]."</td>";
+                                                $total_price += $list[3];
+                                            }
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
+
+                            <?php
+                            echo "<h4>Total Price: ₱".$total_price."</h4>";
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 p-3">
                 <h3 class="text-center">Billing Information</h3>
                 <hr>
                 <form action="" method="post">
@@ -86,41 +123,11 @@
                                 echo "<input type='hidden' name='total_price' value='".$total_price."'>";
                                 echo "<h4>Place On: ".date('Y-m-d')."</h4>";
                             }
-                            echo "<button type='submit' name='order' class='btn btn-danger'>Order</button>";
+                            echo "<button type='submit' name='order' class='btn btn-danger col-12'>Order</button>";
                             echo "</form>";
                         }
                     ?>
                 </form>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                            <h3 class="text-center">Order Summary</h3>
-                    </div>
-                    <div class="card-body">
-                        <?php
-                            $lists = $showList->showRecords("cart_id = ".$_SESSION["cart_id"]);
-                            if(count($lists) > 0){
-                                $total_price = 0;
-                                foreach ($lists as $list) {
-                                    $product = $showProduct->showRecords("id = $list[1]");
-                                    echo "<div class='row'>";
-                                    echo "<div class='col'>";
-                                    echo $product[0][1];
-                                    echo "</div><div class='col'></div>"; 
-                                    echo "<div class='col'>";
-                                    echo "Quantity ".$list[2];
-                                    echo "</div><div class='col'></div>"; 
-                                    echo "<div class='col'>";
-                                    echo "total price ".$list[3];
-                                    echo "</div></div>"; 
-                                    $total_price += $list[3];
-                                }
-                                echo "<h4>P".$total_price."</h4>";
-                            }
-                        ?>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
