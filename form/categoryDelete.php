@@ -25,7 +25,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Category</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
-    <link rel="stylesheet" href="../css/styles.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
