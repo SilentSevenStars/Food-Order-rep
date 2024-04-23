@@ -130,9 +130,9 @@
         </div>
     </section> -->
     <section id="cart">
-        <div class="container mt-5">
-            <h2 class="mb-2 text-center">Shopping Cart</h2>
-            <div class="row justify-content-center">
+        <div class="container pt-4">
+            <h2 class="mb-4 text-center">Shopping Cart</h2>
+            <div class="row justify-content-center border rounded shadow">
                 <div class="col-md-8">
                     <div class="table-responsive">
                         <table class="table">
@@ -142,7 +142,7 @@
                                     <th>Name</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
-                                    <th class="text-right"><span>Amount</span></th>
+                                    <th>Amount</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -164,13 +164,13 @@
                                                             <input type='hidden' name='product_price' value='".$product[0][3]."'>
                                                             <input type='hidden' name='product_id' value='".$i[1]."'>
                                                             <input type='number' name='quantity' min='1' value='".$i[2]."' class='form-control'>
-                                                            <button type='submit' name='update' class='btn btn-primary'>Update</button>
                                                         </div> <!-- Corrected closing tag -->
                                                     </td>";
                                                     echo "<td>$".$product[0][3]."</td>";
                                                     echo "<td>".$i[3]."</td>";
                                                     echo "<td>
                                                                 <input type='hidden' name='product_id' value='".$i[1]."'>
+                                                                <button type='submit' name='update' class='btn btn-primary'>Update</button>
                                                                 <button type='submit' name='delete' class='btn btn-danger'>Delete</button>
                                                         </td>";
                                                     echo "</form>";
@@ -193,13 +193,13 @@
                         </table>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 pt-5">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="cartd-title">Checkout</h4>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">Total: P<?= $total ?></h4>
+                            <h4 class="card-title">Total: ₱<?= $total ?></h4>
                         </div>
                         <div class="card-footer">
                             <a href="checkout.php" class="btn btn-danger">Checkout</a>
