@@ -4,6 +4,7 @@
     require 'component/connection.php';
     require 'component/show.php';
 
+    // $_SESSION['link'] = "about.php";
     $_SESSION['link'] = "about.php";
 
     $showCategory = new Show($conn, 'category');
@@ -121,7 +122,7 @@
         <div class="about-text">
             <span>About Us:</span>
              <p>Why Choose Us </p>
-             <p>Lorem ipsum dolor, sit amet consectetur adipuyfhuerhguerhuehrf8erj8j89bjt98guje88eg87herggr89wrw89isicing elit. Dolorum, optio v </p>
+             <p>Choose us for a wide array of cuisines made with quality ingredients, customizable to your liking, and enjoy convenient ordering with quick delivery and special deals to satisfy your cravings</p>
              <a href="#" class="btn">Learn More<i class='bx bx-right-arrow-alt' ></i></a>
       </div> 
     </section>
