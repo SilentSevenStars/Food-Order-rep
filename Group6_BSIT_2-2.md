@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 #Food Order Project
 =======
-#Group Members
+#Group Members: 
 Joseph Matthew Ringor,
 Kentjustine Mercado,
 Nino Emmanuel Tadeo,
