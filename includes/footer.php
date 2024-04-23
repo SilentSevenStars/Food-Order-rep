@@ -12,7 +12,7 @@
                         if(count($cats) > 0){
                             foreach ($cats as $cat) {
                                 echo "<li style='list-style: none;'>
-                                        <a href='index.php?cat_id=".$cat[0]."' class='text-white' style='text-decoration: none;'>".$cat[1]."</a>
+                                        <a href='menu.php?cat_id=".$cat[0]."' class='text-white' style='text-decoration: none;'>".$cat[1]."</a>
                                     </li>";
                             }
                         } else {
