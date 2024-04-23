@@ -42,7 +42,7 @@
             <div class="row">
                 <h1 class="text-center">Order</h1>
                 <div class="col-12 pt-3">
-                    <div class="d-flex justify-content-around flex-md-row flex-column align-items-md-center">
+                    <div class="d-flex justify-content-around flex-md-row flex-column align-items-md-center text-center">
                         <form class="border border-light shadow-sm rounded" action="" method="post">
                             <input type="hidden" name="services" value="Ongoing">
                             <button type="submit" name="serv" class="btn btn-outline">Ongoing</button>
