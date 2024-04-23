@@ -363,8 +363,8 @@
 
     <?php include 'includes/footer.php' ?>
 
-    <script src="js/sweetalert.js"></script>
     <script src="js/sweetalert2.js"></script>
+    <script src="js/sweetalert.js"></script>
     <script>
         <?php
             if(isset($_SESSION['login'])){

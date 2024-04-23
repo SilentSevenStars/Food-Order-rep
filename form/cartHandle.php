@@ -9,8 +9,8 @@
     $showProduct = new Show($conn, 'product');
     $showCategory = new Show($conn, 'category');
     $showCart = new Show($conn, 'cart');
-    $showList = new Show($conn, 'list');
-    $addList = new Add($conn, 'list');
+    $showList = new Show($conn, 'lists');
+    $addList = new Add($conn, 'lists');
     $addCart = new Add($conn, 'cart');
 
     if(isset($_POST['add_to_cart'])){
@@ -25,11 +25,14 @@
                     $data =[];
                     $quantity = $_POST['quantity'];
                     $sub_price = $_POST['quantity'] * $_POST['price'];
-                    $query = "UPDATE list SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ". $_POST['product_id'];
+                    $query = "UPDATE lists SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ". $_POST['product_id'];
                     $result = $conn->query($query);
                     if($result){
                         $_SESSION['message'] = "Update product successfully";
-                        header("Location: ../menu.php"); 
+                        if(isset($_SESSION['link']))
+                            header("Location: ../".$_SESSION['link']);
+                        else
+                            header("Location: ../menu.php"); 
                     }
                     $_SESSION['message'] = "Update product successfully";
                     header("Location: ../menu.php");
@@ -44,7 +47,10 @@
                     $action = $addList->addQuery($data);
                     if($action){
                         $_SESSION['message'] = "Added to cart Successfully";
-                        header("Location: ../menu.php");
+                        if(isset($_SESSION['link'])){
+                            header("Location: ../".$_SESSION['link']);
+                        } else
+                            header("Location: ../menu.php");
                     } else {
                         echo "Error ";
                     }
@@ -69,7 +75,10 @@
                     $action = $addList->addQuery($product);
                     if($action){
                         $_SESSION['message'] = "Added to cart Succesfully";
-                        header("Location: ../menu.php");
+                        if(isset($_SESSION['link']))
+                            header("Location: ../".$_SESSION['link']);
+                        else
+                            header("Location: ../menu.php");
                     } else {
                         echo "Error";
                     }

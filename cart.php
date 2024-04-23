@@ -51,7 +51,6 @@
 </head>
 <body>
     <?php include 'includes/header.php' ?>
-
     <section id="cart">
         <div class="container pt-4">
             <h2 class="mb-4 text-center">Shopping Cart</h2>
@@ -100,7 +99,11 @@
                                                     echo "</tr>";
                                                     $total += $i[3];
                                                 } else {
-                                                    echo "<td>This product doesn't exist</td>";
+                                                    echo "<td>This food doesn't exist</td>";
+                                                    echo "<td>
+                                                                <input type='hidden' name='product_id' value='".$i[1]."'>
+                                                                <button type='submit' name='delete' class='btn btn-danger'>Delete</button>
+                                                        </td>";
                                                     echo "</form>";
                                                     echo "</tr>";
                                                 }
@@ -133,29 +136,5 @@
         </div>
     </section>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('.quantity').on('change', function(){
-                var quantity = $(this).val();
-                var product_id = $(this).closest('form').find('.product_id').val();
-                var product_price = $(this).closest('form').find('.product_price').val();
-                var sub_total_element = $(this).closest('tr').find('.sub_total');
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'form/update_cart.php', // Update with the path to your PHP script
-                    data: {
-                        quantity: quantity,
-                        product_id: product_id,
-                        product_price: product_price
-                    },
-                    success: function(data){
-                        sub_total_element.text('$' + parseFloat(data).toFixed(2));
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>

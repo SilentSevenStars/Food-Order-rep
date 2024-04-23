@@ -1,5 +1,6 @@
 <?php
     require '../component/connection.php';
+    require '../component/show.php';
     require '../component/delete.php';
 
     $id = $_GET['id'] ?? NULL;
@@ -7,13 +8,21 @@
         header("Location: ../admin/product.php");
 
     $delete = new Delete($conn, 'product', ["id" => $id]);
+    $show = new Show($conn, 'product');
+
+    $data = $show->showRecords("id = $id");
 
     if(isset($_POST['delete'])){
-        try{
-            $action = $delete->deleteQuery();
-            header("Location: ../admin/product.php");
-        }catch(Exception $e){
-            echo "Error: $e";
+        $path = "../upload_img/".$data[0][4];
+        if(!unlink($path)){
+            echo "</div class='alert alert-danger' role='alert'>There is an error in deleting image</div>";
+        } else {
+            try{
+                $action = $delete->deleteQuery();
+                header("Location: ../admin/product.php");
+            }catch(Exception $e){
+                echo "Error: $e";
+            }
         }
     }
 ?>

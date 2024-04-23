@@ -4,6 +4,7 @@
     require 'component/connection.php';
     require 'component/show.php';
 
+    // $_SESSION['link'] = "about.php";
     $_SESSION['link'] = "about.php";
 
     $showCategory = new Show($conn, 'category');

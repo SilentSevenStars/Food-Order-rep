@@ -6,7 +6,7 @@
    if(!isset($_SESSION['customer_id'])){
         if(isset($_SESSION['link'])){
             $_SESSION['login'] = true;
-            header("Location: ".$_SESSION['link']);
+            header("Location: ../".$_SESSION['link']);
         } else {
             $_SESSION['login'] = true;
             header("Location: index.php");
@@ -24,8 +24,11 @@
     if(isset($_POST['add'])) {
          $data = [];
          foreach ($_POST as $name => $value) {
-            $data[$name] = $value;
+            if($name != 'add')
+               $data[$name] = $value;
         }
+        $data['customer_id'] = $_SESSION['customer_id'];
+        $data['product_id'] = $pid;
         try {
             $action = $add->addQuery($data);
             $_SESSION['message'] = "Reviews Added";

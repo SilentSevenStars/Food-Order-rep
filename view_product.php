@@ -4,20 +4,23 @@
     require 'component/update.php';
     require 'component/add.php';
 
+    if(!isset($_GET['pid']))
+        header("Location: menu.php");
+    $pid = $_GET['pid'] ?? NULL;
+
     session_start();
-    $_SESSION['link'] = "menu.php";
+    $_SESSION['link'] = "view_product.php?pid=$pid";
 
     $showProduct = new Show($conn, 'product');
     $showCategory = new Show($conn, 'category');
+    $showCustomer = new Show($conn, 'customer');
     $showCart = new Show($conn, 'cart');
     $showList = new Show($conn, 'lists');
     $showReview = new Show($conn, 'reviews');
     $addList = new Add($conn, 'lists');
     $addCart = new Add($conn, 'cart');
 
-    if(!isset($_GET['pid']))
-        header("Location: menu.php");
-    $pid = $_GET['pid'] ?? NULL;
+    
 
     if(isset($_POST['add_to_cart'])){
         if(!isset($_SESSION['customer_id'])){
@@ -25,12 +28,12 @@
         } else {
             if(isset($_SESSION['cart_id'])){
                 $cart_id = $_SESSION['cart_id'];
-                $list = $showList->showRecords("cart_id = $cart_id AND product_id  = ". $_POST['product_id']);
+                $list = $showList->showRecords("cart_id = $cart_id AND product_id  = ".$pid);
                 if(count($list) > 0){
                     $data =[];
                     $quantity = $_POST['quantity'];
                     $sub_price = $_POST['quantity'] * $_POST['price'];
-                    $query = "UPDATE lists SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ". $_POST['product_id'];
+                    $query = "UPDATE lists SET quantity = '".$quantity."', sub_price = '".$sub_price."' WHERE cart_id = '$cart_id' AND product_id  = ".$pid;
                     $result = $conn->query($query);
                     if($result){
                         $_SESSION['message'] = "Update product successfully";
@@ -42,6 +45,7 @@
                         if($name!="add_to_cart" && $name!="price")
                             $data[$name] = $value;
                     }
+                    $data['product_id'] = $pid;
                     $data['sub_price'] = $_POST['quantity'] * $_POST['price'];
                     $data['cart_id'] = $_SESSION['cart_id'];
                     $action = $addList->addQuery($data);
@@ -65,6 +69,7 @@
                         if($name!="add_to_cart" && $name!="price")
                             $product[$name] = $value;
                     }
+                    $product['product_id'] = $pid;
                     $product['sub_price'] = $_POST['quantity'] * $_POST['price'];
                     $product['cart_id'] = $_SESSION['cart_id'];
 
@@ -94,7 +99,7 @@
 
   <?php include 'includes/header.php' ?>
 
-  <section id="details">
+  <section id="details" class="mb-1">
     <div class="container mt-4">
         <div class="card">
             <?php
@@ -108,7 +113,7 @@
                     </div>
                     <div class="col-md-6 justify-content-center">
                         <form action="" method="post">
-                            <input type="hidden" name="product_id">
+                            <input type="hidden" name="product_id" value="<?= $pid ?>">
                             <h2><?= $product[0][1] ?></h2>
                             <?php
                                 $category = $showCategory->showRecords("id = ".$product[0][2]);
@@ -127,7 +132,7 @@
                                     <input type="hidden" name="price" value="<?= $product[0][3] ?>" class="form-control">
                                 </div>
                             </div>
-                            <button class="btn btn-primary">Add to Cart</button>
+                            <button type="submit" class="btn btn-primary" name="add_to_cart">Add to Cart</button>
                         </form>
                     </div>
                 </div>
@@ -140,7 +145,7 @@
             <?php
                 $reviews = $showReview->showRecords("product_id = ".$pid);
                 if(count($reviews) > 0){
-                    $total = 0;
+                    $total_ratings = 0;
                     $rating_1 = 0;
                     $rating_2 = 0;
                     $rating_3 = 0;
@@ -220,7 +225,7 @@
     </div>
   </section>
 
-  <section id="review">
+  <section id="review" class="mb-3">
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -234,7 +239,42 @@
                 </div>
             </div>
             <div class="card-body">
-                
+                <?php
+                    $reviews = $showReview->showRecords(null, "id DESC", 10);
+                    if(count($reviews) > 0){
+                        foreach ($reviews as $review){
+                            $customer = $showCustomer->showRecords("id = $review[4]");
+                ?>
+                <div class="media">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php
+                                if(count($customer) > 0){
+                                    echo $customer[0][1];
+                                } else {
+                                    echo "Anonymous";
+                                }
+                            ?>
+                        </div>
+                        <div class="col-md-6">
+                            <i class="bi bi-star-fill text-warning"></i><?= $review[1] ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h4><?= $review[2] ?></h4>
+                        </div>
+                        <div class="col">
+                            <p><?= $review[3] ?></p>
+                        </div>
+                    </div>
+                </div>
+                <?php  
+                        }
+                    } else {
+                        echo "<div class='alert alert-danger text-center'>No reviews available</div>";
+                    }
+                ?>
             </div>
         </div>
     </div>
@@ -247,13 +287,36 @@
         </div>
     <?php } ?>
 
+    <?php include 'includes/footer.php' ?>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-4 mt-4">
-    <div class="container text-center">
-      <p>&copy; 2024 Food View. All rights reserved.</p>
-    </div>
-  </footer>
+    
+    <script src="js/sweetalert2.js"></script>
+    <script>
+        <?php
+            if(isset($_SESSION['login'])){
+                echo "swal.fire({
+                    icon: 'info',
+                    title: 'Please login or sign up to continue',
+                    showConfirmButton: false,
+                    html: '<a class=\"btn btn-primary\" href=\"login.php\">Login</a>&nbsp;&nbsp;<a class=\"btn btn-success\" href=\"signup.php\">Sign Up</a>',
+                });";
+                unset($_SESSION['login']);
+            }
+        ?>
+    </script>
+    <script src="js/sweetalert.js"></script>
+    <script>
+        <?php
+            if(isset($_SESSION['message'])){
+                echo "swal({
+                    title: '".$_SESSION['message']."',
+                    icon: 'success',
+                    button: 'Okay',
+                  });";
+                unset($_SESSION['message']);
+            }
+        ?>
+    </script>
 
 </body>
 </html>

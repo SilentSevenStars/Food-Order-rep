@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Apr 21, 2024 at 03:41 PM
+-- Generation Time: Apr 23, 2024 at 02:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,7 +77,10 @@ INSERT INTO `cart` (`id`, `customer_id`) VALUES
 (20, 5),
 (21, 5),
 (22, 5),
-(23, 5);
+(23, 5),
+(24, 5),
+(26, 5),
+(25, 32);
 
 -- --------------------------------------------------------
 
@@ -135,7 +138,8 @@ INSERT INTO `customer` (`id`, `name`, `email`, `phone_number`, `address`, `passw
 (22, 'Ashe', 'ash@gmail.com', '09876543210', 'Pokemon', '$2y$10$FgecK3YHWGAuPbKPJ2Lkde.v4Zm2g/usKHUPNVLpUtG5GxFFIesB2'),
 (23, 'Annie', 'annie@gmail.com', '09121231234', 'lupoa, nueva ecija', '$2y$10$cSKwRv2qQHANEqJ38FiJku1xVeF5afPGakZFdJhr9ed1s3Bc8ty2a'),
 (24, 'Annie', 'annie@gmail.com', '09121231234', 'lupoa, nueva ecija', '$2y$10$umW4c7.kcvDZZcIioE2vwe4dNNFjaTBfXZd2tYMJ/cDpznT8o3WB.'),
-(25, 'YasuMeow', 'yasumeow@gmail.com', '09121231234', 'lupoa, nueva ecija', '$2y$10$7aauzmuCmutDNTwFUkhMgO41LDCxM1z1x28vunmefwBum.5PfdhEe');
+(25, 'YasuMeow', 'yasumeow@gmail.com', '09121231234', 'lupoa, nueva ecija', '$2y$10$7aauzmuCmutDNTwFUkhMgO41LDCxM1z1x28vunmefwBum.5PfdhEe'),
+(32, 'Juan Dela Cruz', 'juan@gmail.com', '09111231234', 'Munoz, Nueva Ecija', '$2y$10$h5Urj1EOfS4JaLhmIItlRuIyq6mRGq6OVr.P81DIHT/n4WxUOVZMu');
 
 -- --------------------------------------------------------
 
@@ -156,7 +160,10 @@ CREATE TABLE `lists` (
 
 INSERT INTO `lists` (`cart_id`, `product_id`, `quantity`, `sub_price`) VALUES
 (22, 13, 3, 300),
-(23, 12, 2, 40);
+(23, 12, 2, 40),
+(25, 3, 1, 50),
+(24, 3, 1, 50),
+(26, 3, 1, 50);
 
 -- --------------------------------------------------------
 
@@ -180,7 +187,8 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `cart_id`, `payment_method`, `total_price`, `place_on`, `payment_status`, `service`) VALUES
 (13, 22, 'Cashier', 300.00, '2024-04-21', 'Complete', 'Ready'),
-(14, 23, 'GCASH', 40.00, '2024-04-21', 'Ongoing', 'Ongoing');
+(14, 23, 'GCASH', 40.00, '2024-04-21', 'Ongoing', 'Ongoing'),
+(15, 24, 'GCASH', 50.00, '2024-04-23', 'Ongoing', 'Ongoing');
 
 -- --------------------------------------------------------
 
@@ -210,8 +218,7 @@ INSERT INTO `product` (`id`, `name`, `category_id`, `price`, `image`) VALUES
 (16, 'Brownie', 1, 20.00, '66074da1d21677.75362636.png'),
 (18, 'Chocolate Sundae', 2, 35.00, '660aa8ba2e5185.74892423.png'),
 (19, 'Hungarian Burger', 3, 40.00, '6614e6dc53c0f8.56262133.png'),
-(20, 'Lechon Manok', 3, 250.00, '6614ececb3eab1.54703378.png'),
-(21, 'Chocolate Cupcake', 1, 30.00, '66189a8e7f1a51.58014776.png');
+(20, 'Lechon Manok', 3, 250.00, '6614ececb3eab1.54703378.png');
 
 -- --------------------------------------------------------
 
@@ -224,10 +231,17 @@ CREATE TABLE `reviews` (
   `rating` varchar(1) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `date` date NOT NULL,
   `customer_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `rating`, `title`, `description`, `customer_id`, `product_id`) VALUES
+(1, '5', 'Hello', 'Hwllo World', 5, 3),
+(2, '3', 'Delicious', 'Best Drink ever', 32, 3);
 
 --
 -- Indexes for dumped tables
@@ -298,7 +312,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -310,13 +324,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -328,7 +342,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -339,13 +353,6 @@ ALTER TABLE `reviews`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `lists`
---
-ALTER TABLE `lists`
-  ADD CONSTRAINT `lists_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `lists_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders`

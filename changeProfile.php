@@ -41,7 +41,7 @@
 <body>
     <div class="container">
         <div class="box form-box">
-        <header>Sign Up</header>
+        <header>Change Profile</header>
             <form action="" method="post">
                 <div class="field input">
                     <label for="name">Full Name</label>
