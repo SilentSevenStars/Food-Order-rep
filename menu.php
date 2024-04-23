@@ -202,7 +202,7 @@
                                                     <input type='number' name='quantity' value='1' min='1' class='form-control'>
                                                     </div>
                                                     <div class='price'>
-                                                    <h3>P".$product[3]."</h3>
+                                                    <h3>₱".$product[3]."</h3>
                                                     </div>
                                                     </div>
                                                     <div class='d-flex justify-content-around my-2'>
