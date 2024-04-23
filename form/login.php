@@ -35,7 +35,7 @@
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-            background: #e8e4c9;
+            background: #c8c4c9;
         }
     </style>
 </head>
