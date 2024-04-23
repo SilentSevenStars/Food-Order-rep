@@ -1,5 +1,14 @@
 <?php
 
+session_start();
+
+require 'component/connection.php';
+require 'component/show.php';
+
+$_SESSION['link'] = "contact.php";
+
+$showCategory = new Show($conn, 'category');
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -56,24 +65,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 0;
             box-sizing: border-box;
         }
-        .contact{
-            width: 60%;
-            padding: 45px;
-            border-radius: 0;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php include 'includes/header.php'; ?>
 
-        <div class="container contact">
-            <div class="row shadow-sm">
-                <div class="col-md-7 p-5">
-                    <form action="" method="POST">
+        <div class="container pt-4">
+            <div class="row shadow p-3 mb-5 rounded">
+                <div class="col-md-7 p-5 ">
+                    <form action="" method="post">
                         <h4>Get in touch</h4>
                         <div class="mb-3">
                             <label for="" class="form-label">Name</label>
@@ -91,10 +91,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="" class="form-label">Message</label>
                             <textarea name="message" id="" cols="30" rows="10" class="form-control" placeholder="Your message" required></textarea>
                         </div>
-                        <input type="submit" value="send" name="send" class="btn btn-primary">
+                        <input type="submit" value="Send" name="Send" class="btn btn-primary">
                     </form>
                 </div>
-                <div class="col-md-5 bg-warning p-4">
+                <div class="col-md-5 bg-warning p-4 rounded">
                     <h4>Contact Us</h4>
                     <div class="mt-5">
                         <hr class="mb-2">
@@ -117,5 +117,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
         </div>
     </div>
+
+    <?php include 'includes/footer.php' ?>
+
+    <script src="js/sweetalert2.js"></script>
+    
+    <script>
+        <?php
+            if(isset($_SESSION['login'])){
+                echo "swal.fire({
+                    icon: 'info',
+                    title: 'Please login or sign up to continue',
+                    showConfirmButton: false,
+                    html: '<a class=\"btn btn-primary\" href=\"login.php\">Login</a>&nbsp;&nbsp;<a class=\"btn btn-success\" href=\"signup.php\">Sign Up</a>',
+                });";
+                unset($_SESSION['login']);
+            }
+        ?>
+    </script>
 </body>
 </html>
