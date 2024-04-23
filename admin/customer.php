@@ -6,6 +6,10 @@
     require '../component/update.php';
     require '../component/add.php';
 
+    if(!isset($_SESSION['admin'])){
+        header("Location: ../form/login.php");
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">

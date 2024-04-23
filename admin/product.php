@@ -2,6 +2,11 @@
     require '../component/connection.php';
     require '../component/show.php';
 
+    session_start();
+    if(!isset($_SESSION['admin'])){
+        header("Location: ../form/login.php");
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
