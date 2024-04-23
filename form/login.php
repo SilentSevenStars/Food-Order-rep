@@ -23,11 +23,6 @@
             echo "Incorrect email or password";
         }
     }
-    if(isset($_GET['logout'])) {
-        session_destroy();
-        header("Location: login.php");
-        exit;
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,9 +35,7 @@
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url(../hero.jpg);
-            background-position: center;
-            background-size: cover;
+            background: #e8e4c9;
         }
     </style>
 </head>

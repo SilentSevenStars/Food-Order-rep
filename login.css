@@ -1,4 +1,6 @@
-
+body{
+    background: #c8c4c9;
+}
 .container {
     display: flex;
     align-items: center;

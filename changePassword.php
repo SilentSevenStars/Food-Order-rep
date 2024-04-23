@@ -29,8 +29,10 @@
                     echo "Error: $e";
                 }
             } else{
-                echo "New Password and Confirm Password does not matched";
+                $_SESSION['message'] = "New Password and Confirm password are incorrect";
             }
+        } else {
+            $_SESSION['message'] = "Old Password Incorrect";
         }
     }
 ?>
@@ -40,7 +42,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Profile</title>
+    <title>Change Password</title>
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
